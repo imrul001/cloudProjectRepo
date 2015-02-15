@@ -1,0 +1,43 @@
+/* 
+    Document   : ajaxOverlayStyle
+    Created on : Nov 9, 2014, 11:39:26 AM
+    Author     : imrul
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.myLoadingImage{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 285px;
+    display: none;
+    z-index: 900000;
+}
+.myOverlay{
+    background-color: #f2f2f2;
+    position: absolute;
+    top: -286px;
+    left: 0;
+    width: 100%;
+    opacity: 0.6;
+    z-index: 2000;
+}
+.imageForLoading
+{
+    width: 70px;
+    margin: 0 auto;
+    z-index: 3000;
+    position: relative;
+}
+.errorMsg{
+    color: red;
+    font-weight: bold;
+}
+.successMsg{
+    color: green;
+    font-weight: bold;
+}

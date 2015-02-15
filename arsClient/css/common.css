@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 22, 2014, 8:51:25 PM
+    Author     : imrul
+*/
+.sidebar-content{
+    border: 2px solid #ddd;
+}
+.firstRow{
+    border-bottom: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    border-top: 2px solid #ddd;
+    padding: 4.2%;
+}
+.totalContent{
+    width: 100%;
+    overflow: hidden;
+    height: auto;
+    clear: both;
+}
+.sidebar-nav li{
+    font-size: 18px;
+}
+.exportPDF,.logoutButton{
+    text-align: right; 
+    font-weight: bold;
+    cursor: pointer;    
+}
+.logoutButton:hover, .exportPDF:hover{
+    text-decoration: underline;
+}
+.footer{
+    float: right;
+    margin-right: 1%;
+    /*                width: 98%;*/
+}
+.footer p.version{
+    float: right; 
+    color: #A79696;
+}
+.content{
+    float: left;
+    margin: 1%;
+}
+.noPaddingLeft{
+    padding-left: 0;
+}
+
