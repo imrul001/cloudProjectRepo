@@ -1,0 +1,20 @@
+/* 
+    Created on : Nov 22, 2014, 1:38:14 PM
+    Author     : imrul
+*/
+.table td, .table th {
+    text-align: center;   
+}
+.table td{
+    width: 50%;
+}
+.dataRow{
+    margin-bottom:  3%;
+    margin-top: 2%; 
+}
+.messageRow{
+    border: 1px solid #ddd;   
+    padding: 2%;
+}
+
+

@@ -1,0 +1,46 @@
+/* 
+    Document   : loginViewStyle
+    Created on : Nov 7, 2014, 9:04:25 PM
+    Author     : imrul
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.myContainer{
+    border: 1px solid black;
+    margin: 0 auto;
+    width: 40%;
+    margin-top: 3%;
+}
+.myRow{
+    border-top: 1px solid black;
+}
+.myH{
+    text-align: center;
+    font-weight: bold;
+}
+.myContent{
+    margin: 0 auto;
+}
+.buttonContainer{
+    width: 27%;
+    margin: 0 auto;
+}
+.myBtn{
+    background-color: white;
+    border: 1px solid #989898;
+    color: #428bca;
+    width: 100%;
+}
+.myh1{
+    padding: 4%;
+}
+.forgotPassword{
+    width: 27%;
+    margin: 0 auto;
+    text-align: center;
+}
+
