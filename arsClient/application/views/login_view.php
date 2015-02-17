@@ -33,7 +33,7 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" for="email"></label>  
                                     <div class="col-md-6">
-                                        <input id="emailFieldId" name="email" type="text" placeholder="" class="form-control input-md">
+                                        <input id="username" name="username" type="text" placeholder="" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" for="password"></label>  
                                     <div class="col-md-6">
-                                        <input id="passwordFieldId" name="password" type="password" placeholder="" class="form-control input-md">
+                                        <input id="password" name="password" type="password" placeholder="" class="form-control input-md">
                                     </div>
                                 </div>
                             </div>

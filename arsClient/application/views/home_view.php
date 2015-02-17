@@ -20,15 +20,16 @@
         </div>
         <div class="container">
             <div class="totalContent" style="border: 1px solid #ddd;">
-                <?php $this->load->view("sidebar_view"); ?>
+                 <?php //$this->load->view("sidebar_view"); ?>
                 <div class="container-fluid" style="float: left; width: 77.8811%;">
-                    <?php $this->load->view("topview_info"); ?>
+                    <?php //$this->load->view("topview_info"); ?>
                     <div class="contentBody"  style="min-height: 455px;">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="col-md-9"></div>
                                 <div class="col-md-2"><h6 class="exportPDF" id="exportpdfButton">Export As PDF</h6></div>
-                                <div class="col-md-1"><h6 class="logoutButton" id="logoutButton">Logout</h6></div>
+                                <!--<div class="col-md-1"><h6 class="logoutButton" id="logoutButton">Logout</h6></div>-->
+                                <div class="col-md-1"><h6><a href="home/logout">Logout</a><h6></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -37,7 +38,7 @@
                             </div>
                         </div>
                         <div id="homeMainContent">
-                            <?php $this->load->view("homeContent_info"); ?>
+                            <?php //$this->load->view("homeContent_info"); ?>
                         </div>
                     </div>
                 </div>
@@ -54,9 +55,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#logoutButton").on("click", function () {
+                
                 window.location.href = "<?php echo base_url() ?>index.php/home/logout";
             });
-			$("#exportpdfButton").on("click", function () {
+            
+	    $("#exportpdfButton").on("click", function () {
 				window.print();
             });
 			
@@ -87,7 +90,7 @@
                 $(".myLoadingImage").hide();
             });
 			
-        })
+        });
     </script>
 </html>
 
