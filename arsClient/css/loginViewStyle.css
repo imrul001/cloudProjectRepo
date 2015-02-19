@@ -10,13 +10,18 @@ root {
     display: block;
 }
 .myContainer{
-    border: 1px solid black;
+    border: 1px solid #ddd;
     margin: 0 auto;
     width: 40%;
     margin-top: 3%;
+    box-shadow: 0 0 5px 5px #888;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
 }
 .myRow{
-    border-top: 1px solid black;
+    border-top: 1px solid #ddd;
 }
 .myH{
     text-align: center;

@@ -25,7 +25,7 @@ and open the template in the editor.
                     <div class="formContainer">
                         <div class="row" style="margin-top: 10%;">
                             <div class="col-xs-12 myContent">
-                                <h5 class="myH ">Your Email</h4>
+                                <h5 class="myH ">Admin Email</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -40,7 +40,7 @@ and open the template in the editor.
                         </div>
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-xs-12 myContent">
-                                <h5 class="myH">Your Password</h4>
+                                <h5 class="myH">Admin Password</h4>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 1%;">
@@ -62,7 +62,7 @@ and open the template in the editor.
                         </div>
                         <div class="row" style="margin-bottom: 10%; margin-top: 2%">
                             <div class="col-xs-12 myContent">
-                                <p class="forgotPassword"><a href="<?php echo base_url();?>index.php/forgotPassword">Forgot Password?</a></p>
+                                <!-- <p class="forgotPassword"><a href="<?php echo base_url();?>index.php/forgotPassword">Forgot Password?</a></p> -->
                             </div>
                         </div>
                     </div>
