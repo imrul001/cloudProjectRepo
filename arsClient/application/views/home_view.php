@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Employee Management System</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
         <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery-ui.min.js"></script>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/bootstrap.css"/>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/simple-sidebar.css"/>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/common.css"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/jquery-ui.css"/>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/ajaxOverlayStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css"/>
     </head>
     <body>
         <div class="myLoadingImage">
@@ -18,71 +18,47 @@
                 <img src="<?php echo base_url(); ?>/images/ajax-loader.gif" alt="Loading" height="60" />
             </div>
         </div>
-        <div class="container">
-            <div class="totalContent" style="border: 1px solid #ddd;">
-                 <?php //$this->load->view("sidebar_view"); ?>
-                <div class="container-fluid" style="float: left; width: 77.8811%;">
-                    <?php //$this->load->view("topview_info"); ?>
-                    <div class="contentBody"  style="min-height: 455px;">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="col-md-9"></div>
-                                <div class="col-md-2"><h6 class="exportPDF" id="exportpdfButton">Export As PDF</h6></div>
-                                <!--<div class="col-md-1"><h6 class="logoutButton" id="logoutButton">Logout</h6></div>-->
-                                <div class="col-md-1"><h6><a href="home/logout">Logout</a><h6></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div id="homeMainContent">
-                            <?php //$this->load->view("homeContent_info"); ?>
-                        </div>
-                    </div>
+        <div id="mainDiv">
+            <div id="header">
+                <div id="PageTitle">
+                    <h1>Employee Management System</h1>
                 </div>
-                <div class="footer">
-                    <div class="row footerRow">
-                        <div class="col-lg-12">
-                            <p class="version">Version 1.0</p>
-                        </div>
-                    </div>
-                </div> 
             </div>
-        </div>
+
+            <div id="container">
+              <div class="logOutButton" style="float: right;">
+                <a class="logoutLink" id="logoutButton" href="<?php echo base_url();?>index.php/home/logout">Logout</a>
+              </div>
+               <h4 class="welcomeMsg">Hello <b><?php echo $username;?></b>!!! You have Successfully Logged In.</h4>
+              <div id="userOptionsContainer">
+                 <div id="tabs">
+                   <ul>
+                     <li><a href="#tabs-1">Search</a></li>
+                     <li><a href="#tabs-2">Add Student</a></li>
+                     <li><a href="#tabs-3">Summery</a></li>
+                     <li><a href="#tabs-4">Superadmin</a></li>
+                  </ul>
+                 <div id="tabs-1" style="padding-bottom: 165px; padding-top: 30px;"></div>
+                 <div id="tabs-2"></div>
+                 <div id="tabs-3"></div>
+                 <div id="tabs-4"></div>
+                </div>
+              </div>
+            </div>
+            <div id="Footer">
+                  <div class="footerContent">
+                    <p>2015 &copy; All Rights Reserved, Footer Content Goes here</p>
+                  </div>
+            </div>
+         </div>       
     </body>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#logoutButton").on("click", function () {
+        	$("#tabs" ).tabs();
+            // $("#logoutButton").on("click", function () {
                 
-                window.location.href = "<?php echo base_url() ?>index.php/home/logout";
-            });
-            
-	    $("#exportpdfButton").on("click", function () {
-				window.print();
-            });
-			
-            $(".sidebar-nav li a.GepRep").css({
-                'font-weight': 'bold',
-                'text-decoration': 'underline'
-            });
-            $("#dateRange").on("change", function () {
-                var date = $(this).val().trim().split("_");
-                var postDate = "minDate=" + date[0] + "&maxDate=" + date[1];
-                var url = "<?php echo base_url() ?>index.php/home/getContentByDateRang";
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: postDate,
-                    success: function (data) {
-                        $("#homeMainContent").html(data);
-                    },
-                    failure: function (data) {
-                        alert("error");
-                    }
-                });
-            });
+            //     window.location.href = "<?php echo base_url() ?>index.php/home/logout";
+            // });		
             $(document).ajaxStart(function () {
                 $(".myLoadingImage").show();
             });
