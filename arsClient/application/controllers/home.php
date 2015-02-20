@@ -10,6 +10,7 @@ class Home extends CI_Controller{
    function __construct()
    {
       parent::__construct();
+      $this->load->model("model_employees");
    }
 
    function index()
@@ -18,7 +19,9 @@ class Home extends CI_Controller{
       {
         $session_data = $this->session->userdata('logged_in');
         $data['username'] = $session_data['username'];
+        $data['employeeObject'] = $this->model_employees->getEmployees();
         $this->load->view('home_view', $data);
+
       }
       else
       {

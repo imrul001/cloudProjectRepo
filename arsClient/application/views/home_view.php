@@ -40,7 +40,32 @@
                   </ul>
                  <div id="tabs-1" style="padding-bottom: 165px; padding-top: 30px;"></div>
                  <div id="tabs-2"></div>
-                 <div id="tabs-3"></div>
+                 <div id="tabs-3">
+                 <table class="table">
+                 <tr>
+                 	<th>Employee No.</th>
+                 	<th>First Name</th>
+                 	<th>Last Name</th>
+                 	<th>Gender</th>
+                 	<th>Birth Date</th>
+                 	<th>Hire Date</th>
+                 </tr>
+                 <?php
+                    if(!empty($employeeObject))
+                 	foreach ($employeeObject as $row) {
+                     echo
+                        '<tr>
+                            <td>' . $row->emp_no . '</td>
+                            <td>' . $row->first_name . '</td>
+                            <td>' . $row->last_name . '</td>
+                            <td>' . $row->gender . '</td>
+                            <td>' . $row->birth_date . '</td>
+                            <td>' . $row->hire_date . '</td>
+                        </tr>';
+                     }
+                  ?>
+                 </table>
+                 </div>
                  <div id="tabs-4"></div>
                 </div>
               </div>
