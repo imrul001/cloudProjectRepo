@@ -34,7 +34,7 @@
                  <div id="tabs">
                    <ul>
                      <li><a href="#tabs-1">Search</a></li>
-                     <li><a href="#tabs-2">Add Student</a></li>
+                     <li><a href="#tabs-2">Add Employee</a></li>
                      <li><a href="#tabs-3">Summery</a></li>
                      <li><a href="#tabs-4">Superadmin</a></li>
                   </ul>
