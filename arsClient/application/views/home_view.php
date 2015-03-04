@@ -33,14 +33,140 @@
               <div id="userOptionsContainer">
                  <div id="tabs">
                    <ul>
-                     <li><a href="#tabs-1">Search</a></li>
-                     <li><a href="#tabs-2">Add Employee</a></li>
-                     <li><a href="#tabs-3">Summery</a></li>
-                     <li><a href="#tabs-4">Superadmin</a></li>
+                     <li><a href="#tabs-1">Salary by Title</a></li>
+                     <li><a href="#tabs-2">Total of Employees by Department</a></li>
+                     <li><a href="#tabs-3">Total of Salary Expense by Department</a></li>
+                     <li><a href="#tabs-4">List of Manager by Department</a></li>
+                     <li><a href="#tabs-5">Total Hire Employees by Year</a></li>
+                     <li><a href="#tabs-6">Total Hire Employees by Year,Department</a></li>
+                     <li><a href="#tabs-7">Add Employee</a></li>
+                     <li><a href="#tabs-8">Summary</a></li>
+                     <li><a href="#tabs-9">Superadmin</a></li>
                   </ul>
-                 <div id="tabs-1" style="padding-bottom: 165px; padding-top: 30px;"></div>
-                 <div id="tabs-2"></div>
+                 <div id="tabs-1">                      
+                     <table class="table">
+                        <tr>
+                               <th>Title</th>                 	
+                               <th>Salary</th>
+                        </tr>
+                        <?php
+                           if(!empty($salarybytitle)){
+                               foreach ($salarybytitle as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->title . '</td>
+                                   <td>' . number_format($row->salary) . '</td>                        
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>
+                 </div>
+                 <div id="tabs-2">
+                    <table class="table">
+                        <tr>
+                               <th>Department Name</th>                 	
+                               <th>Total Employees</th>
+                        </tr>
+                        <?php
+                           if(!empty($totalempbydept)){
+                               foreach ($totalempbydept as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->dept_name . '</td>
+                                   <td>' . number_format($row->total) . '</td>                        
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>
+                 </div>                    
                  <div id="tabs-3">
+                    <table class="table">
+                        <tr>
+                               <th>Department Name</th>                 	
+                               <th>Total Salary</th>
+                        </tr>
+                        <?php
+                           if(!empty($totalsalaryexpensebydept)){
+                               foreach ($totalsalaryexpensebydept as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->dept_name . '</td>
+                                   <td>' . number_format($row->total) . '</td>                        
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>      
+                 </div>
+                 <div id="tabs-4">
+                    <table class="table">
+                        <tr>
+                               <th>Department Name</th>                 	
+                               <th>First Name</th>
+                               <th>Last Name</th>
+                               <th>From Date</th>
+                               <th>To Date</th>
+                        </tr>
+                        <?php
+                           if(!empty($listmanagerbydept)){
+                               foreach ($listmanagerbydept as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->dept_name . '</td>
+                                   <td>' . $row->first_name . '</td>
+                                   <td>' . $row->last_name . '</td>
+                                   <td>' . $row->from_date . '</td>
+                                   <td>' . $row->to_date . '</td>
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>        
+                 </div>
+                 <div id="tabs-5">
+                    <table class="table">
+                        <tr>
+                               <th>Year</th>                 	
+                               <th>Total Hired Employees</th>                               
+                        </tr>
+                        <?php
+                           if(!empty($totalempbyyear)){
+                               foreach ($totalempbyyear as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->year . '</td>
+                                   <td>' . number_format($row->total) . '</td>                                 
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>
+                 </div>
+                 <div id="tabs-6">
+                    <table class="table">
+                        <tr>
+                               <th>Year</th>
+                               <th>Department Name</th>  
+                               <th>Total Hired Employees</th>                               
+                        </tr>
+                        <?php
+                           if(!empty($totalempbyyeardept)){
+                               foreach ($totalempbyyeardept as $row) {
+                            echo
+                               '<tr>
+                                   <td>' . $row->year . '</td>
+                                   <td>' . $row->dept_name . '</td> 
+                                   <td>' . number_format($row->total) . '</td>                                 
+                               </tr>';
+                            }
+                           }
+                         ?>
+                    </table>
+                 </div>
+                 <div id="tabs-7"></div>
+                 <div id="tabs-8">
                  <table class="table">
                  <tr>
                  	<th>Employee No.</th>
@@ -51,9 +177,9 @@
                  	<th>Hire Date</th>
                  </tr>
                  <?php
-                    if(!empty($employeeObject))
+                    if(!empty($employeeObject)){
                  	foreach ($employeeObject as $row) {
-                     echo
+                        echo
                         '<tr>
                             <td>' . $row->emp_no . '</td>
                             <td>' . $row->first_name . '</td>
@@ -62,11 +188,12 @@
                             <td>' . $row->birth_date . '</td>
                             <td>' . $row->hire_date . '</td>
                         </tr>';
+                        }
                      }
                   ?>
                  </table>
                  </div>
-                 <div id="tabs-4"></div>
+                 <div id="tabs-9"></div>
                 </div>
               </div>
             </div>
@@ -80,10 +207,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
         	$("#tabs" ).tabs();
-            // $("#logoutButton").on("click", function () {
-                
-            //     window.location.href = "<?php echo base_url() ?>index.php/home/logout";
-            // });		
+            //$("#search").on("click", function () {
+           
             $(document).ajaxStart(function () {
                 $(".myLoadingImage").show();
             });
