@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/jquery-ui.css"/>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/ajaxOverlayStyle.css"/>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/pagination.css"/>
     </head>
     <body>
         <div class="myLoadingImage">
@@ -55,31 +56,12 @@
                  </div>              
                  <div id="tabs-7"></div>
                  <div id="tabs-8">
-                 <table class="table">
-                 <tr>
-                 	<th>Employee No.</th>
-                 	<th>First Name</th>
-                 	<th>Last Name</th>
-                 	<th>Gender</th>
-                 	<th>Birth Date</th>
-                 	<th>Hire Date</th>
-                 </tr>
-                 <?php
-                    if(!empty($employeeObject)){
-                 	foreach ($employeeObject as $row) {
-                        echo
-                        '<tr>
-                            <td>' . $row->emp_no . '</td>
-                            <td>' . $row->first_name . '</td>
-                            <td>' . $row->last_name . '</td>
-                            <td>' . $row->gender . '</td>
-                            <td>' . $row->birth_date . '</td>
-                            <td>' . $row->hire_date . '</td>
-                        </tr>';
-                        }
-                     }
-                  ?>
-                 </table>
+                 <div id="tableContainer" style="clear:both">
+                   <?php $this->load->view("summary_view") ?>
+                  </div>
+                  <div>
+                  	<div id="demo2"></div>
+                  </div>
                  </div>
                  <div id="tabs-9"></div>
                 </div>
@@ -93,10 +75,8 @@
          </div>       
     </body>
     <script type="text/javascript">
-        
         $(document).ready(function () {
         	$("#tabs" ).tabs();
-            
             $("#salarybytitle_button").on("click", function () {
                     var url = "<?php echo base_url(); ?>index.php/report_control/salarybytitle";
                     $.ajax({
@@ -193,8 +173,17 @@
             $(document).ajaxStop(function () {
                 $(".myLoadingImage").hide();
             });
-			
         });
+    </script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.simplePagination"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+			 $("#page").pagination({
+               items: 100,
+               itemsOnPage: 10,
+               cssStyle: 'light-theme'
+             });
+		})
     </script>
 </html>
 
