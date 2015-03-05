@@ -33,138 +33,26 @@
               <div id="userOptionsContainer">
                  <div id="tabs">
                    <ul>
-                     <li><a href="#tabs-1">Salary by Title</a></li>
-                     <li><a href="#tabs-2">Total of Employees by Department</a></li>
-                     <li><a href="#tabs-3">Total of Salary Expense by Department</a></li>
-                     <li><a href="#tabs-4">List of Manager by Department</a></li>
-                     <li><a href="#tabs-5">Total Hire Employees by Year</a></li>
-                     <li><a href="#tabs-6">Total Hire Employees by Year,Department</a></li>
+                     <li><a href="#tabs-1">Report</a></li>                     
                      <li><a href="#tabs-7">Add Employee</a></li>
                      <li><a href="#tabs-8">Summary</a></li>
                      <li><a href="#tabs-9">Superadmin</a></li>
                   </ul>
-                 <div id="tabs-1">                      
-                     <table class="table">
-                        <tr>
-                               <th>Title</th>                 	
-                               <th>Salary</th>
-                        </tr>
-                        <?php
-                           if(!empty($salarybytitle)){
-                               foreach ($salarybytitle as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->title . '</td>
-                                   <td>' . number_format($row->salary) . '</td>                        
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>
-                 </div>
-                 <div id="tabs-2">
-                    <table class="table">
-                        <tr>
-                               <th>Department Name</th>                 	
-                               <th>Total Employees</th>
-                        </tr>
-                        <?php
-                           if(!empty($totalempbydept)){
-                               foreach ($totalempbydept as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->dept_name . '</td>
-                                   <td>' . number_format($row->total) . '</td>                        
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>
-                 </div>                    
-                 <div id="tabs-3">
-                    <table class="table">
-                        <tr>
-                               <th>Department Name</th>                 	
-                               <th>Total Salary</th>
-                        </tr>
-                        <?php
-                           if(!empty($totalsalaryexpensebydept)){
-                               foreach ($totalsalaryexpensebydept as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->dept_name . '</td>
-                                   <td>' . number_format($row->total) . '</td>                        
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>      
-                 </div>
-                 <div id="tabs-4">
-                    <table class="table">
-                        <tr>
-                               <th>Department Name</th>                 	
-                               <th>First Name</th>
-                               <th>Last Name</th>
-                               <th>From Date</th>
-                               <th>To Date</th>
-                        </tr>
-                        <?php
-                           if(!empty($listmanagerbydept)){
-                               foreach ($listmanagerbydept as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->dept_name . '</td>
-                                   <td>' . $row->first_name . '</td>
-                                   <td>' . $row->last_name . '</td>
-                                   <td>' . $row->from_date . '</td>
-                                   <td>' . $row->to_date . '</td>
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>        
-                 </div>
-                 <div id="tabs-5">
-                    <table class="table">
-                        <tr>
-                               <th>Year</th>                 	
-                               <th>Total Hired Employees</th>                               
-                        </tr>
-                        <?php
-                           if(!empty($totalempbyyear)){
-                               foreach ($totalempbyyear as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->year . '</td>
-                                   <td>' . number_format($row->total) . '</td>                                 
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>
-                 </div>
-                 <div id="tabs-6">
-                    <table class="table">
-                        <tr>
-                               <th>Year</th>
-                               <th>Department Name</th>  
-                               <th>Total Hired Employees</th>                               
-                        </tr>
-                        <?php
-                           if(!empty($totalempbyyeardept)){
-                               foreach ($totalempbyyeardept as $row) {
-                            echo
-                               '<tr>
-                                   <td>' . $row->year . '</td>
-                                   <td>' . $row->dept_name . '</td> 
-                                   <td>' . number_format($row->total) . '</td>                                 
-                               </tr>';
-                            }
-                           }
-                         ?>
-                    </table>
-                 </div>
+                 <div id="tabs-1">
+                     <form id="form_report">
+                         <input id="salarybytitle_button" type="submit" value="Variation Salary by Title">
+                         <input id="totalempbyyear_button" type="submit" value="Total Employee by Year">
+                         <input id="totalempbydept_button" type="submit" value="Total Employee by Department"><br>                         
+                         <input id="totalempbyyeardept_button" type="submit" value="Total Employee by Year, Department">                        
+                         <input id="listmanagerbydept_button" type="submit" value="List Manager by Department">
+                         <input id="totalsalaryexpensebydept_button" type="submit" value="Total Salary Expense by Department">
+                         
+                     </form>
+                     
+                     <div id="result_table"></div>
+                  
+                  
+                 </div>              
                  <div id="tabs-7"></div>
                  <div id="tabs-8">
                  <table class="table">
@@ -205,10 +93,100 @@
          </div>       
     </body>
     <script type="text/javascript">
+        
         $(document).ready(function () {
         	$("#tabs" ).tabs();
-            //$("#search").on("click", function () {
-           
+            
+            $("#salarybytitle_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/salarybytitle";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
+            $("#totalempbydept_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/totalempbydept";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
+            $("#totalempbyyear_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/totalempbyyear";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
+            $("#totalempbyyeardept_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/totalempbyyeardept";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
+            $("#listmanagerbydept_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/listmanagerbydept";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
+            $("#totalsalaryexpensebydept_button").on("click", function () {
+                    var url = "<?php echo base_url(); ?>index.php/report_control/totalsalaryexpensebydept";
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $("#form_report").serialize(),
+                        success: function (data) {
+                            $("#result_table").html(data);
+                        },
+                        failure: function () {
+                            alert("error");
+                        }
+                    });
+                    return false;
+            });
             $(document).ajaxStart(function () {
                 $(".myLoadingImage").show();
             });
