@@ -15,7 +15,7 @@
         <div class="myLoadingImage">
             <div class="myOverlay" style="height: 1519px"></div>
             <div class="imageForLoading">
-                <img src="<?php echo base_url(); ?>/images/ajax-loader.gif" alt="Loading" height="60" />
+                <img src="<?php echo base_url(); ?>css/images/ajax-loader.gif" alt="Loading" height="60" />
             </div>
         </div>
         <div id="mainDiv">
