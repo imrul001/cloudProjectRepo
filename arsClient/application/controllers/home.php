@@ -13,8 +13,7 @@ class Home extends CI_Controller{
       $this->load->model("model_employees");
    }
 
-   function index()
-   {
+   function index() {
       if($this->session->userdata('logged_in'))
       {
         $session_data = $this->session->userdata('logged_in');
