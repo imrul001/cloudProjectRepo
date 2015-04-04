@@ -175,7 +175,7 @@
             });
         });
     </script>
-    <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.simplePagination"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery.simplePagination.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
 			 $("#page").pagination({
