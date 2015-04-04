@@ -34,10 +34,10 @@
               <div id="userOptionsContainer">
                  <div id="tabs">
                    <ul>
-                     <li><a href="#tabs-1">Report</a></li>                     
+                     <li><a href="#tabs-1">Query</a></li>                     
                      <li><a href="#tabs-7">Add Employee</a></li>
                      <li><a href="#tabs-8">Summary</a></li>
-                     <li><a href="#tabs-9">Superadmin</a></li>
+                     <li><a href="#tabs-9">Search</a></li>
                   </ul>
                  <div id="tabs-1">
                      <form id="form_report">
@@ -46,15 +46,14 @@
                          <input id="totalempbydept_button" type="submit" value="Total Employee by Department"><br>                         
                          <input id="totalempbyyeardept_button" type="submit" value="Total Employee by Year, Department">                        
                          <input id="listmanagerbydept_button" type="submit" value="List Manager by Department">
-                         <input id="totalsalaryexpensebydept_button" type="submit" value="Total Salary Expense by Department">
-                         
+                         <input id="totalsalaryexpensebydept_button" type="submit" value="Total Salary Expense by Department">  
                      </form>
                      
                      <div id="result_table"></div>
-                  
-                  
                  </div>              
-                 <div id="tabs-7"></div>
+                 <div id="tabs-7">
+                   <?php $this->load->view('add_employee_form');?>
+                 </div>
                  <div id="tabs-8">
                  <div id="tableContainer" style="clear:both">
                    <?php $this->load->view("summary_view") ?>
