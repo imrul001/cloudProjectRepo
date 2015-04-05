@@ -21,6 +21,20 @@ class Model_employees extends CI_Model{
         }
 
 	}
+
+    function getDepartments(){
+
+        $sql=" SELECT * FROM departments ";
+        $q1=$this->db->query($sql);        
+        return $q1->result(); 
+    }
+
+    function getPositions(){
+        $sql= "SELECT DISTINCT title FROM titles";
+        $q1=$this->db->query($sql);
+        return $q1->result();
+    }
+
 	function salarybytitle()
     {
          
@@ -88,6 +102,72 @@ class Model_employees extends CI_Model{
         $q1=$this->db->query($sql);        
         return $q1->result();         
     }
+
+
+    // Search Queries
+
+    function getEmployeeById($id, $limit){
+
+        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name,employees.gender,departments.dept_name, titles.title, salaries.salary".
+              " FROM employees,dept_emp,departments,titles,salaries".
+              " WHERE employees.emp_no=".$id." AND dept_emp.emp_no=".$id." AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=".$id." AND salaries.emp_no=".$id.
+              " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+    }
+
+    function getEmployeesByDepartment($dept_no, $limit){
+
+        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title". 
+              " FROM employees,dept_emp,departments,titles".
+              " WHERE dept_emp.dept_no='".$dept_no."' AND employees.emp_no=dept_emp.emp_no AND departments.dept_no='".$dept_no."' AND titles.emp_no=dept_emp.emp_no".
+              " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+    }
+
+    function getEmployeesByGender($gender, $limit){
+        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
+              " FROM employees,dept_emp,departments,titles".
+              " WHERE employees.gender='".$gender."' AND employees.emp_no=dept_emp.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+              " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+
+    }
+
+    function getEmployeeByTitle($title, $limit){
+        $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
+               " FROM employees,dept_emp,departments,titles".
+               " WHERE titles.title='".$title."' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+               " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+
+    }
+    function getEmployeeByFn($pattern, $limit){
+        $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
+               " FROM employees,dept_emp,departments,titles".
+               " WHERE employees.first_name LIKE '%$pattern%' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+               " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+    }
+
+    function getEmployeeByLn($pattern, $limit){
+       $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".                   
+              " FROM employees,dept_emp,departments,titles".
+              " WHERE employees.last_name LIKE '%$pattern%' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+              " LIMIT ".$limit;
+        $q1=$this->db->query($sql);        
+        return $q1->result();         
+    }
+
 }
+
+// $sql ="SELECT DISTINCT employees.emp_no, employees.first_name, employees.last_name,employees.gender, departments.dept_name, titles.title ".
+//               "FROM employees,departments,titles".
+//               "WHERE employees.emp_no IN (SELECT emp_no FROM dept_emp WHERE dept_no=".$dept_no.") AND departments.dept_no=".$dept_no." AND titles.emp_no=employees.emp_no ".
+//               "LIMIT ".$limit;
 ?>
 

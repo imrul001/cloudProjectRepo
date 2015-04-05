@@ -56,13 +56,15 @@
                  </div>
                  <div id="tabs-8">
                  <div id="tableContainer" style="clear:both">
-                   <?php $this->load->view("summary_view") ?>
+                   <?php $this->load->view("summary_view"); ?>
                   </div>
                   <div>
                   	<div id="demo2"></div>
                   </div>
                  </div>
-                 <div id="tabs-9"></div>
+                 <div id="tabs-9">
+                   <?php $this->load->view("search_view");?>
+                 </div>
                 </div>
               </div>
             </div>

@@ -5,32 +5,25 @@
     <th>First Name</th>
     <th>Last Name</th>
     <th>Gender</th>
-    <th>Birth Date</th>
-    <th>Hire Date</th>
+    <th>Department</th>
+    <th>Title</th>
+<!--     <th>Salary</th> -->
 </tr>
 <?php
-    if(!empty($employeeObject)){
-    foreach ($employeeObject as $row) {
+    if(!empty($empSearchObject)){
+    foreach ($empSearchObject as $row) {
         echo
             '<tr>
                 <td>' . $row->emp_no . '</td>
                 <td>' . $row->first_name . '</td>
                 <td>' . $row->last_name . '</td>
                 <td>' . $row->gender . '</td>
-                <td>' . $row->birth_date . '</td>
-                <td>' . $row->hire_date . '</td>
+                <td>' . $row->dept_name . '</td>
+                <td>' . $row->title . '</td>
             </tr>';
         }
     }
 ?>
 </table>
 </div>
-<div id="paginationHolder" style="width:38%; margin: 0 auto;">
-    <div id="page"></div>  
-</div>
-
-
-
-
-
-
+<!--            <td>' . $row->salary . '</td> -->
