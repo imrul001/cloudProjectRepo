@@ -19,6 +19,8 @@ class Home extends CI_Controller{
         $session_data = $this->session->userdata('logged_in');
         $data['username'] = $session_data['username'];
         $data['employeeObject'] = $this->model_employees->getEmployees();
+        $data['dept'] = $this->model_employees->getDepartments(); 
+        $data['positions'] = $this->model_employees->getPositions();
         $this->load->view('home_view', $data);
 
       }

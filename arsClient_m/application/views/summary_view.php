@@ -1,5 +1,5 @@
 <div id="tableContainer">
-<table class="table">
+<table class="table table-striped table-hover table-bordered table-condensed">
  <tr>
     <th>Employee No.</th>
     <th>First Name</th>

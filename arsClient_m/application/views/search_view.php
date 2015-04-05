@@ -94,7 +94,7 @@
                 <?php
                 if (!empty($dept)) {
                     foreach ($dept as $row) {
-                        echo '<option value=' . $row->dept_no . '>' . $row->dept_name . '</option>';
+                        echo '<option value=' . $row["dept_no"] . '>' . $row["dept_name"] . '</option>';
                     }
                 }
                 ?>
@@ -103,7 +103,7 @@
                 <?php
                 if (!empty($positions)) {
                     foreach ($positions as $row) {
-                        echo '<option value' . $row->title . '>' . $row->title . '</option>';
+                        echo '<option value' . $row . '>' . $row . '</option>';
                     }
                 }
                 ?>
@@ -139,20 +139,20 @@
     function getLabel() {
         $('#paramSelector').on("change", function () {
             $("#searchParamLabel").html($('option:selected', this).attr("nameVal") + ": ");
-            $('#paramField').val("");	
+            $('#paramField').val("");
         })
     }
     function getSearchParamList() {
         $('#paramSelector').on("change", function () {
             if ($('option:selected', this).val() == 'gender') {
                 hideAll();
-                rowCountEnable();
+                rowCountEnable()
                 $('#paramField').attr('name', 'gender')
                 $('#gender').show();
             }
             if ($('option:selected', this).val() == 'dept') {
                 hideAll();
-                rowCountEnable();
+                rowCountEnable()
                 $('#paramField').attr('name', 'dept')
                 $('#dept').show();
             }
@@ -164,13 +164,13 @@
             }
             if ($('option:selected', this).val() == 'emp_id') {
                 hideAll();
-                rowCountDisable();
+                rowCountDisable()
                 $('#paramField').attr('name', 'emp_id')
                 $('#paramField').show();
             }
             if ($('option:selected', this).val() == 'first_name') {
                 hideAll();
-                rowCountEnable()
+                rowCountEnable();
                 $('#paramField').attr('name', 'first_name')
                 $('#paramField').show();
             }
@@ -248,7 +248,7 @@
         return false;
 
     }
-
+    
     function rowCountDisable(){
     	$("#rowNumber").attr("disabled","disabled")    
     	$("#rowNumber").val(1);
