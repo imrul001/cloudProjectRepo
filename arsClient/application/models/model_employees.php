@@ -7,10 +7,32 @@
  **/
 
 class Model_employees extends CI_Model{
+    function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title)
+    {   
+        $sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
+        if ($q->num_rows() > 0) {return "0";}        
+        else{
+            $data = array(  'emp_no' => $emp_no ,'first_name' => $first_name ,'last_name' => $last_name,
+                            'gender'=>$gender, 'birth_date'=>date('Y-m-d', strtotime($birth_date)),
+                            'hire_date'=>date('Y-m-d', strtotime($from_date)),
+                    );        
+            $data_dept = array('emp_no' => $emp_no ,'dept_no' => $dept_no ,'from_date'=>date('Y-m-d', strtotime($from_date)),
+                            'to_date'=>date('Y-m-d', strtotime($to_date)),
+                    );     
+            $data_title = array('emp_no' => $emp_no ,'title' => $title ,'from_date'=>date('Y-m-d', strtotime($from_date)),
+                            'to_date'=>date('Y-m-d', strtotime($to_date)),
+                    );
+            $data_salary = array('emp_no' => $emp_no ,'salary' => $salary ,'from_date'=>date('Y-m-d', strtotime($from_date)),
+                            'to_date'=>date('Y-m-d', strtotime($to_date)),
+                    );
+            $this->db->insert('employees', $data); $this->db->insert('dept_emp', $data_dept);
+            $this->db->insert('salaries', $data_salary); $this->db->insert('titles', $data_title);
+            return "1";
+        }
+    }
+    function getEmployees(){
 
-	function getEmployees(){
-
-	    $this->db->select('*');
+	$this->db->select('*');
         $this->db->from('employees');
         $this->db->limit(30);
         $query = $this->db->get();
