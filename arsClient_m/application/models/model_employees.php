@@ -7,43 +7,48 @@
  * */
 class Model_employees extends CI_Model {
 
+    function addemployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_no, $from_date, $to_date, $salary, $title) {
+        $m = new MongoClient();
+        $db = $m->TestMongoDB;
+        $c1 = $db->employees;
+        $c2 = $db->dept_emp;
+        $c3 = $db->titles;
+        $c4 = $db->salaries;
+        $arrayName = array('emp_no' => (int) $emp_no);
+        $response = "0";
+        $check = $c1->count($arrayName);
 
-     function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title){
-         $m = new MongoClient();            
-         $db = $m->TestMongoDB;
-         $collection = $db->employees;
-         $arrayName = array('emp_no' => (int)$emp_no );            
-         $response = "0";
-         $check = $collection->count($arrayName);
-         
-         if($check == 0){
-             $empArray= array('emp_no' => (int)$emp_no , 
-            'first_name' => $first_name,
-            'last_name'=> $last_name,
-            'gender'=>$gender,
-            'birth_date'=> date('Y-m-d',strtotime($birth_date)),
-            'hire_date' => date('Y-m-d',strtotime($from_date)));
-         $deptArray = array('emp_no' => $emp_no, 
-            'dept_no' => $dept_no, 
-            'from_date' => date('Y-m-d',strtotime($from_date)), 
-            'to_date' => date('Y-m-d',strtotime($to_date)));
-         $titlesArray = array('emp_no' => $emp_no,
-            'title' => $title,
-            'from_date' => date('Y-m-d',strtotime($from_date)), 
-            'to_date' => date('Y-m-d',strtotime($to_date)));
-         $salaryArray = array('emp_no' => $emp_no, 
-           'salary' => (int)$salary,
-           'from_date' => date('Y-m-d',strtotime($from_date)), 
-           'to_date' => date('Y-m-d',strtotime($to_date)));
-         
-            $db->employees->insert($empArray);
-            $db->dept_emp->insert($deptArray);
-            $db->titles->insert($titlesArray);
-            $db->salaries->insert($salaryArray);
+        if ($check == 0) {
+            $empArray = array('emp_no' => (int) $emp_no,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'gender' => $gender,
+                'birth_date' => date('Y-m-d', strtotime($birth_date)),
+                'hire_date' => date('Y-m-d', strtotime($from_date)));
+
+            $deptArray = array('emp_no' => (int)$emp_no,
+                'dept_no' => $dept_no,
+                'from_date' => date('Y-m-d', strtotime($from_date)),
+                'to_date' => date('Y-m-d', strtotime($to_date)));
+
+            $titlesArray = array('emp_no' => (int)$emp_no,
+                'title' => $title,
+                'from_date' => date('Y-m-d', strtotime($from_date)),
+                'to_date' => date('Y-m-d', strtotime($to_date)));
+
+            $salaryArray = array('emp_no' => (int)$emp_no,
+                'salary' => (int) $salary,
+                'from_date' => date('Y-m-d', strtotime($from_date)),
+                'to_date' => date('Y-m-d', strtotime($to_date)));
+
+            $c1->insert($empArray);
+            $c2->insert($deptArray);
+            $c3->insert($titlesArray);
+            $c4->insert($salaryArray);
             $response = "1";
-         }
-         return $response;       
-     }
+        }
+        return $response;
+    }
 
     function getEmployees() {
         $m = new MongoClient();
@@ -141,22 +146,21 @@ class Model_employees extends CI_Model {
 
     function getEmployeeById($id, $limit) {
         $m = new MongoClient();
-        $func ="function(id, limit){".
-             "var empObject = db.employees.find({'emp_no':id },{emp_no:1,first_name:1,last_name:1,gender:1, _id:0}).limit(1).toArray();".
-             "var deptObject = db.dept_emp.findOne({'emp_no':id },{dept_no:1, _id:1});".
-             "var titleObject = db.titles.findOne({'emp_no': id},{title:1, _id:1});".
-             "var deptNameObject = db.departments.findOne({'dept_no': deptObject.dept_no},{dept_name:1, _id:1});".
-             "var jsonObject = {'emp_no': empObject[0].emp_no,
+        $func = "function(id, limit){" .
+                "var empObject = db.employees.find({'emp_no':id },{emp_no:1,first_name:1,last_name:1,gender:1, _id:0}).limit(1).toArray();" .
+                "var deptObject = db.dept_emp.findOne({'emp_no':id },{dept_no:1, _id:1});" .
+                "var titleObject = db.titles.findOne({'emp_no': id},{title:1, _id:1});" .
+                "var deptNameObject = db.departments.findOne({'dept_no': deptObject.dept_no},{dept_name:1, _id:1});" .
+                "var jsonObject = {'emp_no': empObject[0].emp_no,
                     'first_name': empObject[0].first_name,
                     'last_name': empObject[0].last_name,
                     'gender': empObject[0].gender,
                     'dept_name': deptNameObject.dept_name,
                     'title': titleObject.title}
-             return jsonObject;".   
-            "}";
-        $response = $m->TestMongoDB->execute($func, array((int)$id, (int)$limit));
+             return jsonObject;" .
+                "}";
+        $response = $m->TestMongoDB->execute($func, array((int) $id, (int) $limit));
         return $response;
-        
     }
 
     function getEmployeeByFn($pattern, $limit) {

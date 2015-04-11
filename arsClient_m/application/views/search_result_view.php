@@ -10,7 +10,7 @@
 <!--     <th>Salary</th> -->
 </tr>
 <?php
-    if(!empty($empSearchObject)){
+    if(count($empSearchObject)==2){
     foreach ($empSearchObject as $row) {
         echo
             '<tr>
@@ -27,4 +27,3 @@
 ?>
 </table>
 </div>
-<!--            <td>' . $row->salary . '</td> -->
