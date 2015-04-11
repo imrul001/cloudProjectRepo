@@ -17,6 +17,24 @@ class Report_Control extends CI_Controller{
       parent::__construct();
       $this->load->model('model_employees');
    }
+   function addemployee(){
+       
+        $emp_no = $this->input->post('emp_no');
+        $first_name = $this->input->post('first_name');
+        $last_name = $this->input->post('last_name');
+        $gender = $this->input->post('gender');
+        $birth_date = $this->input->post('birth_date');
+        
+        $dept_no = $this->input->post('dept_no');
+        $from_date = $this->input->post('from_date');
+        $to_date = $this->input->post('to_date');        
+        $salary = $this->input->post('salary');
+        $title = $this->input->post('title');
+  
+        $data['emp_result'] = $this->model_employees->addemployee( $emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no, $from_date,$to_date,$salary,$title);
+        $this->load->view('addemployee_view', $data);       
+    
+   }
    function salarybytitle(){
         $data['salarybytitle'] = $this->model_employees->salarybytitle();        
         $this->load->view('salarybytitle_view', $data);

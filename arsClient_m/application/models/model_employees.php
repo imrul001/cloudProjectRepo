@@ -7,6 +7,44 @@
  * */
 class Model_employees extends CI_Model {
 
+
+     function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title){
+         $m = new MongoClient();            
+         $db = $m->TestMongoDB;
+         $collection = $db->employees;
+         $arrayName = array('emp_no' => (int)$emp_no );            
+         $response = "0";
+         $check = $collection->count($arrayName);
+         
+         if($check == 0){
+             $empArray= array('emp_no' => (int)$emp_no , 
+            'first_name' => $first_name,
+            'last_name'=> $last_name,
+            'gender'=>$gender,
+            'birth_date'=> date('Y-m-d',strtotime($birth_date)),
+            'hire_date' => date('Y-m-d',strtotime($from_date)));
+         $deptArray = array('emp_no' => $emp_no, 
+            'dept_no' => $dept_no, 
+            'from_date' => date('Y-m-d',strtotime($from_date)), 
+            'to_date' => date('Y-m-d',strtotime($to_date)));
+         $titlesArray = array('emp_no' => $emp_no,
+            'title' => $title,
+            'from_date' => date('Y-m-d',strtotime($from_date)), 
+            'to_date' => date('Y-m-d',strtotime($to_date)));
+         $salaryArray = array('emp_no' => $emp_no, 
+           'salary' => (int)$salary,
+           'from_date' => date('Y-m-d',strtotime($from_date)), 
+           'to_date' => date('Y-m-d',strtotime($to_date)));
+         
+            $db->employees->insert($empArray);
+            $db->dept_emp->insert($deptArray);
+            $db->titles->insert($titlesArray);
+            $db->salaries->insert($salaryArray);
+            $response = "1";
+         }
+         return $response;       
+     }
+
     function getEmployees() {
         $m = new MongoClient();
         $db = $m->TestMongoDB;
@@ -15,20 +53,6 @@ class Model_employees extends CI_Model {
         return $empList;
     }
 
-    // function salarybytitle_m(){
-    //     $m = new MongoClient();
-    //     $db = $m->TestMongoDB;
-    //     $scope = array("greeter" => "Fred");
-    //     $func = "function getSalaryByTitle(){
-    //       var db = connect('TestMongoDB');
-    //       var titles = db.titles.find({},{emp_no:1, title:1}).limit(30);
-    //       var titles_detail = titles.next();
-    //       var salaries = db.salaries.find({emp_no:{ $in: titles_detail } }).limit(30);
-    //       return titles_detail;}";
-    //     $code = new MongoCode($func, $scope);
-    //     $response = $db->execute($code,array("Goodbye", "Joe"));
-    //     return $response;
-    // }
     function salarybytitle() {
 
         $sql = " SELECT titles.title, salaries.salary As salary " .
