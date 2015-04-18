@@ -7,9 +7,17 @@ import java.sql.Statement;
 
 public class MysqlJDBC {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/employees";
-	static final String USER = "root";
-	static final String PASS = "123imrul";
+	
+//	local setup
+	
+//	static final String DB_URL = "jdbc:mysql://localhost:3306/employees";
+//	static final String USER = "root";
+//	static final String PASS = "123imrul";
+	
+//	openshift setup
+	static final String DB_URL = "jdbc:mysql://127.5.68.2:3306/employees";
+	static final String USER = "adminfas3n5L";
+	static final String PASS = "T--fwJQtAdwI";
 	private Connection conn = null;
 	
 	public Connection getConnection(){

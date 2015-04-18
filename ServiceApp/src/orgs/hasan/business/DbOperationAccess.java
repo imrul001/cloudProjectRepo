@@ -103,20 +103,20 @@ public class DbOperationAccess {
 		 
 		 DbOperationAccess access = new DbOperationAccess();
 		 if(access.isValidEmployee(1)){
-//			 Employee employee = new Employee();
-//			 employee.setEmp_no(1);
-//			 employee.setFirst_name("Imrul");
-//			 employee.setLast_name("hasan");
-//			 employee.setGender("M");
-//			 employee.setBirth_date(Utility.getDateFromString("11/09/1988"));
-//			 employee.setFrom_date(Utility.getDateFromString("11/04/2015"));
-//			 employee.setTo_date(Utility.getDateFromString("11/04/2015"));
-//			 employee.setDept_no("d001");
-//			 employee.setSalary(20000);
-//			 employee.setTitle("Staff");
-//			 if(access.addNewEmployee(employee)){
-//				 System.out.println("Valid");
-//			 }
+			 Employee employee = new Employee();
+			 employee.setEmp_no(1);
+			 employee.setFirst_name("Imrul");
+			 employee.setLast_name("hasan");
+			 employee.setGender("M");
+			 employee.setBirth_date(Utility.getDateFromString("11/09/1988"));
+			 employee.setFrom_date(Utility.getDateFromString("11/04/2015"));
+			 employee.setTo_date(Utility.getDateFromString("11/04/2015"));
+			 employee.setDept_no("d001");
+			 employee.setSalary(20000);
+			 employee.setTitle("Staff");
+			 if(access.addNewEmployee(employee)){
+				 System.out.println("Valid");
+			 }
 		 }else{
 			 System.out.println("Invalid");
 			 if(access.deleteEmployee(1)){

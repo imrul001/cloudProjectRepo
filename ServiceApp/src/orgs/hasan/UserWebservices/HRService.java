@@ -32,7 +32,7 @@ public class HRService {
 	
 	@WebMethod(operationName="deleteEmployee")
 	@WebResult(partName="IsEmployeeDeleted")
-	public boolean deleteEmployee(int emp_no) throws SQLException{
+	public boolean deleteEmployee(@WebParam(partName="emp_no")int emp_no) throws SQLException{
 		return impl.deleteEmployee(emp_no);
 	}
 }
