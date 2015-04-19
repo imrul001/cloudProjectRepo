@@ -10,18 +10,19 @@
 <!--     <th>Salary</th> -->
 </tr>
 <?php
-    if(count($empSearchObject)==2){
+    if($empSearchObject!=NULL){
     foreach ($empSearchObject as $row) {
+        $dept = $row['dept_emp'];
+        $title = $row['titles'];
         echo
             '<tr>
                 <td>' . $row['emp_no'] . '</td>
                 <td>' . $row['first_name'] . '</td>
                 <td>' . $row['last_name'] . '</td>
                 <td>' . $row['gender'] . '</td>
-                <td>' . $row['dept_name'] . '</td>
-                <td>' . $row['title'] . '</td>
+                <td>' . $dept[0]['dept_name'] . '</td>
+                <td>' . $title[0]['title'] . '</td>
             </tr>';
-        break;
         }
     }
 ?>

@@ -15,7 +15,7 @@ class User extends CI_Model {
     //put your code here
    function login($username, $password){
         $m = new MongoClient();
-        $db = $m->TestMongoDB;
+        $db = $m->employees;
         $collection = $db->users;
         $queryParam = array('username' => $username, 'password' => $password);
         $user = $collection->find($queryParam);

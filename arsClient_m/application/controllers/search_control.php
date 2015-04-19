@@ -20,9 +20,9 @@ class Search_Control extends CI_Controller{
 
    function getEmployeesByDept(){
 
-        $dept_no = $this->input->post('methodValue');
+        $dept = $this->input->post('methodValue');
         $limit =$this->input->post('rowCount');
-        $data['empSearchObject'] = $this->model_employees->getEmployeesByDepartment($dept_no, $limit);        
+        $data['empSearchObject'] = $this->model_employees->getEmployeesByDepartment($dept, $limit);        
         $this->load->view('search_result_view', $data);
    }
    function getEmployeesByGender(){

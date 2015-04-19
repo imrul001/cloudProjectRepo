@@ -94,7 +94,7 @@
                 <?php
                 if (!empty($dept)) {
                     foreach ($dept as $row) {
-                        echo '<option value=' . $row["dept_no"] . '>' . $row["dept_name"] . '</option>';
+                        echo '<option value=' . $row . '>' . $row . '</option>';
                     }
                 }
                 ?>

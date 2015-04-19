@@ -9,6 +9,7 @@
     <th>Hire Date</th>
 </tr>
 <?php
+   
     if(!empty($employeeObject)){
     foreach ($employeeObject as $row) {
         echo
@@ -21,7 +22,7 @@
                 <td>' . date('Y-M-d',$row["hire_date"]->sec) . '</td>
             </tr>';
         }
-    }
+   }
 ?>
 </table>
 </div>

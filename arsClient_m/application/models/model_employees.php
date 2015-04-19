@@ -52,9 +52,9 @@ class Model_employees extends CI_Model {
 
     function getEmployees() {
         $m = new MongoClient();
-        $db = $m->TestMongoDB;
-        $collection = $db->employees;
-        $empList = $collection->find()->limit(30);
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $empList = $collection->find()->limit(2);
         return $empList;
     }
 
@@ -73,18 +73,18 @@ class Model_employees extends CI_Model {
     function getDepartments() {
 
         $m = new MongoClient();
-        $db = $m->TestMongoDB;
-        $collection = $db->departments;
-        $deptList = $collection->find();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $deptList = $collection->distinct("dept_emp.dept_name");
         return $deptList;
     }
 
     function getPositions() {
 
         $m = new MongoClient();
-        $db = $m->TestMongoDB;
-        $collection = $db->titles;
-        $postList = $collection->distinct("title");
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $postList = $collection->distinct("titles.title");
         return $postList;
     }
 
@@ -146,22 +146,40 @@ class Model_employees extends CI_Model {
 
     function getEmployeeById($id, $limit) {
         $m = new MongoClient();
-        $func = "function(id, limit){" .
-                "var empObject = db.employees.find({'emp_no':id },{emp_no:1,first_name:1,last_name:1,gender:1, _id:0}).limit(1).toArray();" .
-                "var deptObject = db.dept_emp.findOne({'emp_no':id },{dept_no:1, _id:1});" .
-                "var titleObject = db.titles.findOne({'emp_no': id},{title:1, _id:1});" .
-                "var deptNameObject = db.departments.findOne({'dept_no': deptObject.dept_no},{dept_name:1, _id:1});" .
-                "var jsonObject = {'emp_no': empObject[0].emp_no,
-                    'first_name': empObject[0].first_name,
-                    'last_name': empObject[0].last_name,
-                    'gender': empObject[0].gender,
-                    'dept_name': deptNameObject.dept_name,
-                    'title': titleObject.title}
-             return jsonObject;" .
-                "}";
-        $response = $m->TestMongoDB->execute($func, array((int) $id, (int) $limit));
-        return $response;
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $param= array('emp_no' => (int)$id);
+        $empInfo = $collection->find($param)->limit($limit);
+        return $empInfo ;
     }
+    
+    function getEmployeesByGender($gender, $limit) {
+        $m = new MongoClient();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $param= array('gender' => $gender);
+        $empInfo = $collection->find($param)->limit($limit);
+        return $empInfo ;
+    }
+    
+    function getEmployeeByTitle($title, $limit) {
+        $m = new MongoClient();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $param= array('titles.title' => $title);
+        $empInfo = $collection->find($param)->limit($limit);
+        return $empInfo ;
+    }
+    
+    function getEmployeesByDepartment($dept, $limit) {
+        $m = new MongoClient();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $param= array('dept_emp.dept_name' => $dept);
+        $empInfo = $collection->find($param)->limit($limit);
+        return $empInfo ;
+    }
+    
 
     function getEmployeeByFn($pattern, $limit) {
         $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title" .
