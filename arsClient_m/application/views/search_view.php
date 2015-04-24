@@ -229,7 +229,7 @@
                 }
             }
 
-        })
+        });
     }
 
     function postQueryParam(methodName) {
