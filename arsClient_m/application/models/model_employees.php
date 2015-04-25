@@ -7,26 +7,33 @@
  * */
 class Model_employees extends CI_Model {
 
-    function addemployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_name, $from_date, $to_date, $salary, $title) {
+    function addemployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_no, $from_date, $to_date, $salary, $title) {
         
         $m = new MongoClient();
         $db = $m->employees;
         $collection = $db->empCollection;
+        $deptCol = $db->departments;
         $arrayName = array('emp_no' => (int) $emp_no);
         $response = "0";
         $check = $collection->count($arrayName);
+        $str = str_replace("-", " ", $title);
         if ($check == 0) {
-
+            $param = array('dept_no' => $dept_no);
+            $deptObject = $deptCol->find($param);
+            foreach ($deptObject as $row){
+                $dept_name = $row['dept_name'];
+            }
             $deptArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
                 "to_date" => new MongoDate(strtotime($to_date)),
-                "dept_name" => $dept_name);
+                "dept_name" => $dept_name,
+                "dept_no" =>  $dept_no);
             $dept_manager = "";
             $salaryArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
                 "to_date" => new MongoDate(strtotime($to_date)),
                 "salary" => (int) $salary);
             $titleArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
                 "to_date" => new MongoDate(strtotime($to_date)),
-                "title" => $title);
+                "title" => $str);
             $empArray = array('emp_no' => (int) $emp_no,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
@@ -53,13 +60,12 @@ class Model_employees extends CI_Model {
     }
 
     function getDepartments() {
-
         $m = new MongoClient();
         $db = $m->employees;
-        $collection = $db->empCollection;
-        $deptList = $collection->distinct("dept_emp.dept_name");
+        $collection = $db->departments;
+        $deptList = $collection->find();
         return $deptList;
-    }
+    }   
 
     function getPositions() {
 
@@ -86,7 +92,8 @@ class Model_employees extends CI_Model {
         $db = $m->employees;
         $collection = $db->empCollection;
         $param = array('gender' => $gender);
-        $empInfo = $collection->find($param)->limit($limit);
+        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
         return $empInfo;
     }
 
@@ -94,17 +101,20 @@ class Model_employees extends CI_Model {
         $m = new MongoClient();
         $db = $m->employees;
         $collection = $db->empCollection;
-        $param = array('titles.title' => $title);
-        $empInfo = $collection->find($param)->limit($limit);
+        $str = str_replace("-", " ", $title);
+        $param = array('titles.title' => $str);
+        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
         return $empInfo;
     }
 
-    function getEmployeesByDepartment($dept, $limit) {
+    function getEmployeesByDepartment($dept_no, $limit) {
         $m = new MongoClient();
         $db = $m->employees;
         $collection = $db->empCollection;
-        $param = array('dept_emp.dept_name' => $dept);
-        $empInfo = $collection->find($param)->limit($limit);
+        $param = array('dept_emp.dept_no' => $dept_no);
+        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
         return $empInfo;
     }
 
@@ -114,7 +124,8 @@ class Model_employees extends CI_Model {
         $collection = $db->empCollection;
         $regex = new MongoRegex("/^" . $pattern . "/i");
         $param = array('first_name' => $regex);
-        $empInfo = $collection->find($param)->limit($limit);
+        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
         return $empInfo;
     }
 
@@ -124,7 +135,8 @@ class Model_employees extends CI_Model {
         $collection = $db->empCollection;
         $regex = new MongoRegex("/^" . $pattern . "/i");
         $param = array('last_name' => $regex);
-        $empInfo = $collection->find($param)->limit($limit);
+        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
         return $empInfo;
     }
 }
