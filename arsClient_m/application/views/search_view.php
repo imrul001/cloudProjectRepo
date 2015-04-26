@@ -94,7 +94,7 @@
                 <?php
                 if (!empty($dept)) {
                     foreach ($dept as $row) {
-                        echo '<option value=' . $row . '>' . $row . '</option>';
+                        echo '<option value=' . $row['dept_no'] . '>' . $row['dept_name'] . '</option>';
                     }
                 }
                 ?>
@@ -102,8 +102,9 @@
             <select id="post" style="display: none;">
                 <?php
                 if (!empty($positions)) {
-                    foreach ($positions as $row) {
-                        echo '<option value' . $row . '>' . $row . '</option>';
+                    foreach ($positions as $row) {  
+                        $str = str_replace(" ", "-", $row);
+                        echo '<option value=' . $str . '>' . $row . '</option>';
                     }
                 }
                 ?>

@@ -14,14 +14,16 @@
     foreach ($empSearchObject as $row) {
         $dept = $row['dept_emp'];
         $title = $row['titles'];
+        $deptLen = sizeof($dept);
+        $titlelen = sizeof($title);
         echo
             '<tr>
                 <td>' . $row['emp_no'] . '</td>
                 <td>' . $row['first_name'] . '</td>
                 <td>' . $row['last_name'] . '</td>
                 <td>' . $row['gender'] . '</td>
-                <td>' . $dept[0]['dept_name'] . '</td>
-                <td>' . $title[0]['title'] . '</td>
+                <td>' . $dept[$deptLen - 1]['dept_name'] . '</td>
+                <td>' . $title[$titlelen -1]['title'] . '</td>
             </tr>';
         }
     }
