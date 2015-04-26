@@ -56,7 +56,7 @@ and open the template in the editor.
                         <div class="row" style="margin-top: 2%;">
                             <div class="col-xs-12">
                                 <div class="buttonContainer">
-                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse myBtn">Login</button>
+                                    <button id="singlebutton" name="singlebutton" class="btn btn-inverse myBtn" value="login">Login</button>
                                 </div>
                             </div>
                         </div>

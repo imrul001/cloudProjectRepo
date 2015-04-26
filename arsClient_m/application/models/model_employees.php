@@ -92,8 +92,8 @@ class Model_employees extends CI_Model {
         $db = $m->employees;
         $collection = $db->empCollection;
         $param = array('gender' => $gender);
-        $sp = array('emp_no' => 1);
-        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
+//        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
 
@@ -103,8 +103,8 @@ class Model_employees extends CI_Model {
         $collection = $db->empCollection;
         $str = str_replace("-", " ", $title);
         $param = array('titles.title' => $str);
-        $sp = array('emp_no' => 1);
-        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
+//        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
 
@@ -113,8 +113,8 @@ class Model_employees extends CI_Model {
         $db = $m->employees;
         $collection = $db->empCollection;
         $param = array('dept_emp.dept_no' => $dept_no);
-        $sp = array('emp_no' => 1);
-        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
+//        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
 
@@ -124,8 +124,8 @@ class Model_employees extends CI_Model {
         $collection = $db->empCollection;
         $regex = new MongoRegex("/^" . $pattern . "/i");
         $param = array('first_name' => $regex);
-        $sp = array('emp_no' => 1);
-        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
+//        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
 
@@ -135,8 +135,8 @@ class Model_employees extends CI_Model {
         $collection = $db->empCollection;
         $regex = new MongoRegex("/^" . $pattern . "/i");
         $param = array('last_name' => $regex);
-        $sp = array('emp_no' => 1);
-        $empInfo = $collection->find($param)->sort($sp)->limit($limit);
+//        $sp = array('emp_no' => 1);
+        $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
 }

@@ -77,7 +77,8 @@
         <?php
             if(!empty($positions)){
                 foreach ($positions as $row) {
-                     echo '<option value='.$row->title.'>'.$row->title;
+                  $str = str_replace(" ", "-", $row->title);
+                  echo '<option value='.$str.'>'.$row->title;
                 }
             }
         ?>          

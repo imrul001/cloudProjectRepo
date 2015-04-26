@@ -107,8 +107,11 @@
                     var pastYear = past.getTime();
                     var age = Math.floor((nowYear - pastYear)/(365.25 * 24 * 60 * 60 * 1000));
                                         
-                    // if($('#gender-0').val()==="M"){gender="M";}
-                    // else gender="F";
+                    if($('#gender-0').val()==="M"){
+                        gender="M";
+                    }else{
+                      gender="F";  
+                    } 
                    
                     // if($('#emp_no').val()===""){alert("<Employee No> cannot be empty.");$( '#emp_no' ).focus();}                   
                     // else if($('#first_name').val()===""){alert("<First Name> cannot be empty."); $( '#first_name' ).focus();}
