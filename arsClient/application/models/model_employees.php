@@ -133,6 +133,7 @@ class Model_employees extends CI_Model{
         $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name,employees.gender,departments.dept_name, titles.title, salaries.salary".
               " FROM employees,dept_emp,departments,titles,salaries".
               " WHERE employees.emp_no=".$id." AND dept_emp.emp_no=".$id." AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=".$id." AND salaries.emp_no=".$id.
+              " ORDER BY employees.emp_no ". 
               " LIMIT ".$limit;
         $q1=$this->db->query($sql);        
         return $q1->result();         
@@ -140,18 +141,23 @@ class Model_employees extends CI_Model{
 
     function getEmployeesByDepartment($dept_no, $limit){
 
-        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title". 
-              " FROM employees,dept_emp,departments,titles".
-              " WHERE dept_emp.dept_no='".$dept_no."' AND employees.emp_no=dept_emp.emp_no AND departments.dept_no='".$dept_no."' AND titles.emp_no=dept_emp.emp_no".
+        $sql =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title". 
+              " FROM employees e,dept_emp de, departments dp,titles t".
+              " WHERE de.dept_no='".$dept_no."' AND e.emp_no=de.emp_no AND dp.dept_no='".$dept_no."' AND t.emp_no=de.emp_no".            
+              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
+	      " ORDER BY e.emp_no".  
               " LIMIT ".$limit;
+        
         $q1=$this->db->query($sql);        
         return $q1->result();         
     }
 
     function getEmployeesByGender($gender, $limit){
-        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
-              " FROM employees,dept_emp,departments,titles".
-              " WHERE employees.gender='".$gender."' AND employees.emp_no=dept_emp.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+        $sql =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
+              " FROM employees e,dept_emp de,departments dp,titles t".
+              " WHERE e.gender='".$gender."' AND e.emp_no=de.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
+              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
+              " ORDER BY e.emp_no". 
               " LIMIT ".$limit;
         $q1=$this->db->query($sql);        
         return $q1->result();         
@@ -159,27 +165,33 @@ class Model_employees extends CI_Model{
     }
 
     function getEmployeeByTitle($title, $limit){
-        $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
-               " FROM employees,dept_emp,departments,titles".
-               " WHERE titles.title='".$title."' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+        $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
+               " FROM employees e,dept_emp de,departments dp,titles t".
+               " WHERE t.title='".$title."' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
+               "    AND  de.from_date IN (SELECT MAX(dd.from_date) FROM dept_emp dd WHERE dd.emp_no=e.emp_no)".
+               " ORDER BY e.emp_no".  
                " LIMIT ".$limit;
         $q1=$this->db->query($sql);        
         return $q1->result();         
 
     }
     function getEmployeeByFn($pattern, $limit){
-        $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".
-               " FROM employees,dept_emp,departments,titles".
-               " WHERE employees.first_name LIKE '%$pattern%' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+        $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
+               " FROM employees e,dept_emp de,departments dp,titles t".
+               " WHERE e.first_name LIKE '%$pattern%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
+              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
+               " ORDER BY e.emp_no".
                " LIMIT ".$limit;
         $q1=$this->db->query($sql);        
         return $q1->result();         
     }
 
     function getEmployeeByLn($pattern, $limit){
-       $sql = " SELECT employees.emp_no, employees.first_name, employees.last_name, employees.gender, departments.dept_name,titles.title".                   
-              " FROM employees,dept_emp,departments,titles".
-              " WHERE employees.last_name LIKE '%$pattern%' AND employees.emp_no=titles.emp_no AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=dept_emp.emp_no".
+       $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".                   
+              " FROM employees e,dept_emp de,departments dp,titles t".
+              " WHERE e.last_name LIKE '%$pattern%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
+              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
+              " ORDER BY e.emp_no".
               " LIMIT ".$limit;
         $q1=$this->db->query($sql);        
         return $q1->result();         
