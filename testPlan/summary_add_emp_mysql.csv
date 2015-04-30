@@ -1,0 +1,6 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,KB/sec,Avg. Bytes
+visit login page,1,15,15,15,0.00,0.00%,66.7,8275.46,127111.0
+login into my account,1,5,5,5,0.00,0.00%,200.0,169.14,866.0
+Visit Home Page,1,361,361,361,0.00,0.00%,2.8,1500.07,554523.0
+Create Employee Record,20,390,309,618,83.17,0.00%,2.5,0.71,288.0
+TOTAL,23,356,5,618,132.21,0.00%,2.8,81.06,29924.3
