@@ -16,6 +16,7 @@
         $title = $row['titles'];
         $deptLen = sizeof($dept);
         $titlelen = sizeof($title);
+                
         echo
             '<tr>
                 <td>' . $row['emp_no'] . '</td>

@@ -7,26 +7,52 @@
  * */
 class Model_employees extends CI_Model {
 
+	function getdeptName($dept_no){
+		if($dept_no == "d009"){
+			return "Customer Service";
+		}
+		if($dept_no == "d005"){
+			return "Development";
+		}
+		if($dept_no == "d002"){
+			return "Finance";
+		}
+		if($dept_no == "d003"){
+			return "Human Resources";
+		}
+		if($dept_no == "d001"){
+			return "Marketing";
+		}
+		if($dept_no == "d004"){
+			return "Production";
+		}
+		if($dept_no == "d006"){
+			return "Quality Management";
+		}
+		if($dept_no == "d008"){
+			return "Research";
+		}
+		if($dept_no == "d007"){
+			return "Sales";
+		}
+	}
+
+
     function addemployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_no, $from_date, $to_date, $salary, $title) {
-        
+
         $m = new MongoClient();
         $db = $m->employees;
         $collection = $db->empCollection;
-        $deptCol = $db->departments;
         $arrayName = array('emp_no' => (int) $emp_no);
         $response = "0";
         $check = $collection->count($arrayName);
         $str = str_replace("-", " ", $title);
         if ($check == 0) {
-            $param = array('dept_no' => $dept_no);
-            $deptObject = $deptCol->find($param);
-            foreach ($deptObject as $row){
-                $dept_name = $row['dept_name'];
-            }
-            $deptArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
+            $dept_name = $this->getdeptName($dept_no);
+            $departmentstArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
                 "to_date" => new MongoDate(strtotime($to_date)),
                 "dept_name" => $dept_name,
-                "dept_no" =>  $dept_no);
+                "dept_no" => $dept_no);
             $dept_manager = "";
             $salaryArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
                 "to_date" => new MongoDate(strtotime($to_date)),
@@ -40,7 +66,7 @@ class Model_employees extends CI_Model {
                 'gender' => $gender,
                 'birth_date' => new MongoDate(strtotime($birth_date)),
                 'hire_date' => new MongoDate(strtotime($from_date)),
-                'dept_emp' => $deptArray,
+                'dept_emp' => $departmentstArray,
                 'dept_manager' => $dept_manager,
                 'salaries' => $salaryArray,
                 'titles' => $titleArray
@@ -65,13 +91,13 @@ class Model_employees extends CI_Model {
         $collection = $db->departments;
         $deptList = $collection->find();
         return $deptList;
-    }   
+    }
 
     function getPositions() {
 
         $m = new MongoClient();
         $db = $m->employees;
-        $collection = $db->empCollection;
+        $collection = $db->empCollection;   
         $postList = $collection->distinct("titles.title");
         return $postList;
     }
@@ -108,7 +134,7 @@ class Model_employees extends CI_Model {
         return $empInfo;
     }
 
-    function getEmployeesByDepartment($dept_no, $limit) {
+    function getEmployeesByDepartment($dept_no, $limit, $m) {
         $m = new MongoClient();
         $db = $m->employees;
         $collection = $db->empCollection;
@@ -139,6 +165,7 @@ class Model_employees extends CI_Model {
         $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
     }
+
 }
 ?>
 
