@@ -7,36 +7,35 @@
  * */
 class Model_employees extends CI_Model {
 
-	function getdeptName($dept_no){
-		if($dept_no == "d009"){
-			return "Customer Service";
-		}
-		if($dept_no == "d005"){
-			return "Development";
-		}
-		if($dept_no == "d002"){
-			return "Finance";
-		}
-		if($dept_no == "d003"){
-			return "Human Resources";
-		}
-		if($dept_no == "d001"){
-			return "Marketing";
-		}
-		if($dept_no == "d004"){
-			return "Production";
-		}
-		if($dept_no == "d006"){
-			return "Quality Management";
-		}
-		if($dept_no == "d008"){
-			return "Research";
-		}
-		if($dept_no == "d007"){
-			return "Sales";
-		}
-	}
-
+    function getdeptName($dept_no) {
+        if ($dept_no == "d009") {
+            return "Customer Service";
+        }
+        if ($dept_no == "d005") {
+            return "Development";
+        }
+        if ($dept_no == "d002") {
+            return "Finance";
+        }
+        if ($dept_no == "d003") {
+            return "Human Resources";
+        }
+        if ($dept_no == "d001") {
+            return "Marketing";
+        }
+        if ($dept_no == "d004") {
+            return "Production";
+        }
+        if ($dept_no == "d006") {
+            return "Quality Management";
+        }
+        if ($dept_no == "d008") {
+            return "Research";
+        }
+        if ($dept_no == "d007") {
+            return "Sales";
+        }
+    }
 
     function addemployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_no, $from_date, $to_date, $salary, $title) {
 
@@ -97,7 +96,7 @@ class Model_employees extends CI_Model {
 
         $m = new MongoClient();
         $db = $m->employees;
-        $collection = $db->empCollection;   
+        $collection = $db->empCollection;
         $postList = $collection->distinct("titles.title");
         return $postList;
     }
@@ -111,6 +110,58 @@ class Model_employees extends CI_Model {
         $param = array('emp_no' => (int) $id);
         $empInfo = $collection->find($param)->limit($limit);
         return $empInfo;
+    }
+
+    function editEmployee($emp_no, $first_name, $last_name, $gender, $birth_date, $dept_no, $from_date, $to_date, $salary, $title) {
+        $m = new MongoClient();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $arrayName = array('emp_no' => (int) $emp_no);
+        $response = "1";
+        $check = $collection->count($arrayName);
+        $str = str_replace("-", " ", $title);
+        if ($check == 1) {
+            $dept_name = $this->getdeptName($dept_no);
+            $departmentstArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
+                "to_date" => new MongoDate(strtotime($to_date)),
+                "dept_name" => $dept_name,
+                "dept_no" => $dept_no);
+            $dept_manager = "";
+            $salaryArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
+                "to_date" => new MongoDate(strtotime($to_date)),
+                "salary" => (int) $salary);
+            $titleArray[0] = array("from_date" => new MongoDate(strtotime($from_date)),
+                "to_date" => new MongoDate(strtotime($to_date)),
+                "title" => $str);
+            $empArray = array('emp_no' => (int) $emp_no,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'gender' => $gender,
+                'birth_date' => new MongoDate(strtotime($birth_date)),
+                'hire_date' => new MongoDate(strtotime($from_date)),
+                'dept_emp' => $departmentstArray,
+                'dept_manager' => $dept_manager,
+                'salaries' => $salaryArray,
+                'titles' => $titleArray
+            );
+            $collection->update(array("emp_no" => (int) $emp_no), $empArray);
+            $response = "0";
+        }
+        return $response;
+    }
+
+    function deleteEmployee($emp_no) {
+        $m = new MongoClient();
+        $db = $m->employees;
+        $collection = $db->empCollection;
+        $arrayName = array('emp_no' => (int) $emp_no);
+        $check = $collection->count($arrayName);
+        if ($check < 1) {
+            return "1";
+        } else {
+            $collection->remove(array('emp_no' => (int) $emp_no));
+            return "0";
+        }
     }
 
     function getEmployeesByGender($gender, $limit) {

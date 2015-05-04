@@ -20,10 +20,10 @@ class Report_Control extends CI_Controller{
     function addemployee(){
        
         $emp_no = $this->input->post('emp_no');
-	$first_name = $this->input->post('first_name');
-	$last_name = $this->input->post('last_name');
-	$gender = $this->input->post('gender');
-	$birth_date = $this->input->post('birth_date');
+	      $first_name = $this->input->post('first_name');
+	      $last_name = $this->input->post('last_name');
+	      $gender = $this->input->post('gender');
+	      $birth_date = $this->input->post('birth_date');
         
         $dept_no = $this->input->post('dept_no');
         $from_date = $this->input->post('from_date');
@@ -35,6 +35,32 @@ class Report_Control extends CI_Controller{
         $this->load->view('addemployee_view', $data);       
     
    }
+
+   function editEmployee(){
+        $emp_no = $this->input->post('emp_no');
+        $first_name = $this->input->post('first_name');
+        $last_name = $this->input->post('last_name');
+        $gender = $this->input->post('gender');
+        $birth_date = $this->input->post('birth_date');
+        
+        $dept_no = $this->input->post('dept_no');
+        $from_date = $this->input->post('from_date');
+        $to_date = $this->input->post('to_date');        
+        $salary = $this->input->post('salary');
+        $title = $this->input->post('title');
+        
+        $data['emp_result'] = $this->model_employees->editEmployee( $emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no, $from_date,$to_date,$salary,$title);
+        $this->load->view('editemployee_view', $data);
+
+   }
+
+   function deleteEmployee(){
+        $emp_no = $this->input->post('emp_no');
+        $data['emp_result'] = $this->model_employees->deleteEmployee($emp_no);
+        $this->load->view('deleteEmployee_view', $data);
+
+   }
+
    function salarybytitle(){
         $data['salarybytitle'] = $this->model_employees->salarybytitle();        
         $this->load->view('salarybytitle_view', $data);

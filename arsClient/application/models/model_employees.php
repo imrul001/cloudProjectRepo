@@ -7,8 +7,7 @@
  **/
 
 class Model_employees extends CI_Model{
-    function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title)
-    {   
+    function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title){   
         $sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
         if ($q->num_rows() > 0) {return "0";}        
         else{
@@ -31,6 +30,36 @@ class Model_employees extends CI_Model{
             return "1";
         }
     }
+
+    function editEmployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title){   
+        $sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
+        if ($q->num_rows() < 1) {return "1";}        
+        else{
+            $sql1 = "UPDATE employees SET first_name = ?, last_name = ?, gender = ?, birth_date = ?, hire_date = ? WHERE emp_no = ?";
+            $sql2 = "UPDATE dept_emp SET dept_no = ?, from_date = ?, to_date = ? WHERE emp_no = ?";
+            $sql3 = "UPDATE salaries SET salary = ?, from_date = ?, to_date = ? WHERE emp_no = ?";
+            $sql4 = "UPDATE titles SET title = ?, from_date = ?, to_date = ? WHERE emp_no = ?";
+            $this->db->query($sql1, array($first_name, $last_name, $gender, $birth_date, $from_date, $emp_no));
+            $this->db->query($sql2, array($dept_no, $from_date, $to_date, $emp_no));
+            $this->db->query($sql3, array($salary, $from_date, $to_date, $emp_no));
+            $this->db->query($sql4, array($title, $from_date, $to_date, $emp_no));
+            return "0";
+        }
+    }
+
+    function deleteEmployee($emp_no){
+    	$sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
+        if ($q->num_rows() < 1) {return "1";}        
+        else{
+            $this->db->delete('employees', array('emp_no' => $emp_no)); 
+			$this->db->delete('dept_emp', array('emp_no' => $emp_no)); 
+			$this->db->delete('salaries', array('emp_no' => $emp_no)); 
+			$this->db->delete('titles', array('emp_no' => $emp_no)); 
+        }
+    }
+
+
+
     function getEmployees(){
 
 	$this->db->select('*');
