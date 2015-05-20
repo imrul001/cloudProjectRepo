@@ -15,5 +15,4 @@ public class UserServiceImpl {
 		}
 		return user;
 	}
-
 }

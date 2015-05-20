@@ -35,4 +35,5 @@ public class HRService {
 	public boolean deleteEmployee(@WebParam(partName="emp_no")int emp_no) throws SQLException{
 		return impl.deleteEmployee(emp_no);
 	}
+
 }

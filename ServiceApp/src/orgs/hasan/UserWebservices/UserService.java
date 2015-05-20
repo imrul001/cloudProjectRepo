@@ -17,10 +17,11 @@ import orgs.hasan.userClasses.User;
 public class UserService {
 	 UserServiceImpl serviceImpl = new UserServiceImpl();
      @WebMethod(operationName="userLogin")
-	 @WebResult(partName="userInfo")
+	 @WebResult(name="userInfo")
 	 public User userLoginService(@WebParam(partName="UserName")String username, 
 			 @WebParam(partName="Password")String password) throws SQLException{
-		 return serviceImpl.userlogin(username, password);
+    	 	return serviceImpl.userlogin(username, password);
+
 	 }
 
 }

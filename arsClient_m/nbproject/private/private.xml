@@ -3,7 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/cloudProjectRepo/arsClient/application/config/config.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/models/user.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/controllers/home.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/views/search_result_view.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/views/add_employee_form.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/models/model_employees.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/controllers/report_control.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/views/search_view.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/controllers/search_control.php</file>
+            <file>file:/var/www/cloudProjectRepo/arsClient_m/application/views/home_view.php</file>
         </group>
     </open-files>
 </project-private>

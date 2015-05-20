@@ -1,0 +1,155 @@
+body,td,th {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height:1.5em;
+}
+body {
+    background-color: #FFFFFF;
+}
+#mainDiv{
+    overflow: hidden;
+    width:1020px;
+    margin: auto;
+    -moz-box-shadow: 0 0 5px 5px #888;
+    -webkit-box-shadow: 0 0 5px 5px#888;
+    box-shadow: 0 0 5px 5px #888;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+#header{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    /*  height: 462px;*/
+}
+#PageTitle{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+/*    font-family: CopperPlate Gothic bold;*/
+    background-color:white;
+    border: 1px solid #ddd;
+    width: 1019px;
+    overflow: hidden;
+    height: auto;
+    text-align:center;
+    color:blue;
+}
+#PageTitle h1{
+    font-size: 38px;
+    position: relative;
+    padding: 1%;
+}
+#PageTitle h2{
+    position: relative;
+    left: 215px;
+}
+#Banner {
+    border-bottom:none;
+    background: dimgray;
+    height:320px;
+    color: #000;
+    text-align:center;	
+}
+
+#menu{
+    background-color:#666;
+    font-size:16px;
+    font-weight:bold;
+    text-align:right;
+}
+
+
+#container{
+    width: 1019px;
+    border: 1px solid #ddd;
+    position: relative;
+    padding-bottom: 20px;
+    height: auto;
+    overflow: hidden;
+    background: white;
+}
+
+#LeftSideBar {
+    background-color:white;
+    width:180px;
+    min-height: 600px;
+    float:left;	
+    /*  border:1px solid #ddd;*/
+    color:black;
+    text-align:center;
+}
+
+
+#ContentSection {
+    background-color:white;
+    border: 1px solid #ddd;
+    /*  width:780px;*/
+    /*  float:left;	*/
+    position: relative;
+    /*  left: 180px;*/
+    color:black;
+    height: auto;
+    overflow: hidden;
+}
+
+#UpperContent{
+    background-color:#CCC;    
+    color:#000;
+    text-align:center;
+
+}
+
+#LowerContent{
+    background-color:#CCC;	
+    color:white;
+
+}
+
+#Box1{
+    border:#999 1px solid;
+    background-color: #F6F6F6;
+    float:left;
+    width:250px;
+    height:220px;	
+    color:#000;
+    margin:12px 10px 10px 30px;
+    -moz-border-radius:10px;
+    text-align:center;	
+}
+
+#Box2{
+    border:#999 1px solid;
+    background-color:#F6F6F6;
+    float:left;
+    width:250px;
+    height:220px;	
+    color:#000;
+    margin:12px 10px 10px 10px;
+    -moz-border-radius:10px;
+    text-align:center;			
+}
+
+
+
+#RightSideBar {
+    background-color:white;
+    width:180px;
+    min-height: 600px;
+    float:left;
+    color: black;
+    text-align:center;
+    border: 1px solid #ddd;
+}
+
+#Footer{
+    background: white;
+    height:50px;
+    text-align:center;
+    color:black;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

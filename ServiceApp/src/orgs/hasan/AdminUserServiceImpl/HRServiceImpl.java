@@ -1,8 +1,11 @@
 package orgs.hasan.AdminUserServiceImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import orgs.hasan.business.DbOperationAccess;
+import orgs.hasan.userClasses.Department;
 import orgs.hasan.userClasses.Employee;
 
 public class HRServiceImpl {
