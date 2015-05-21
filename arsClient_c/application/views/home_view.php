@@ -70,7 +70,7 @@
                  </div>
                  <div id="tabs-9">
                    <?php
-                    // $this->load->view("search_view");
+                    $this->load->view("search_view");
                     ?>
                  </div>
                 </div>

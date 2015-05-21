@@ -156,79 +156,72 @@ class Model_employees extends CI_Model{
     // Search Queries
 
     function getEmployeeById($id, $limit){
-
-        $sql =" SELECT employees.emp_no, employees.first_name, employees.last_name,employees.gender,departments.dept_name, titles.title, salaries.salary".
-              " FROM employees,dept_emp,departments,titles,salaries".
-              " WHERE employees.emp_no=".$id." AND dept_emp.emp_no=".$id." AND departments.dept_no=dept_emp.dept_no AND titles.emp_no=".$id." AND salaries.emp_no=".$id.
-              " ORDER BY employees.emp_no ". 
-              " LIMIT ".$limit;
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $id,
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeeByID', array($params));
+        return $employeesList;         
     }
 
     function getEmployeesByDepartment($dept_no, $limit){
-
-        $sql =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title". 
-              " FROM employees e,dept_emp de, departments dp,titles t".
-              " WHERE de.dept_no='".$dept_no."' AND e.emp_no=de.emp_no AND dp.dept_no='".$dept_no."' AND t.emp_no=de.emp_no".            
-              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
-	      " ORDER BY e.emp_no".  
-              " LIMIT ".$limit;
-        
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $dept_no, 
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeesByDepartment', array($params));
+        return $employeesList->EmployeeSearhInfo;
     }
 
     function getEmployeesByGender($gender, $limit){
-        $sql =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
-              " FROM employees e,dept_emp de,departments dp,titles t".
-              " WHERE e.gender='".$gender."' AND e.emp_no=de.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
-              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
-              " ORDER BY e.emp_no". 
-              " LIMIT ".$limit;
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $gender, 
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeesByGender', array($params));
+        return $employeesList->EmployeeSearhInfo;         
 
     }
 
     function getEmployeeByTitle($title, $limit){
-        $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
-               " FROM employees e,dept_emp de,departments dp,titles t".
-               " WHERE t.title='".$title."' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
-               "    AND  de.from_date IN (SELECT MAX(dd.from_date) FROM dept_emp dd WHERE dd.emp_no=e.emp_no)".
-               " ORDER BY e.emp_no".  
-               " LIMIT ".$limit;
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $title, 
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeesByTitle', array($params));
+        return $employeesList->EmployeeSearhInfo;        
 
     }
     function getEmployeeByFn($pattern, $limit){
-        $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".
-               " FROM employees e,dept_emp de,departments dp,titles t".
-               " WHERE e.first_name LIKE '%$pattern%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
-              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
-               " ORDER BY e.emp_no".
-               " LIMIT ".$limit;
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $pattern, 
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeesByFirstName', array($params));
+        return $employeesList->EmployeeSearhInfo;         
     }
 
     function getEmployeeByLn($pattern, $limit){
-       $sql = " SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title".                   
-              " FROM employees e,dept_emp de,departments dp,titles t".
-              " WHERE e.last_name LIKE '%$pattern%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no".
-              "    AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)".
-              " ORDER BY e.emp_no".
-              " LIMIT ".$limit;
-        $q1=$this->db->query($sql);        
-        return $q1->result();         
+       $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "arg0" => $pattern, 
+            "arg1" => $limit
+         );
+        $employeesList = $AuthorService->__soapCall('getEmployeesByLastName', array($params));
+        return $employeesList->EmployeeSearhInfo;
     }
 
 }
-
-// $sql ="SELECT DISTINCT employees.emp_no, employees.first_name, employees.last_name,employees.gender, departments.dept_name, titles.title ".
-//               "FROM employees,departments,titles".
-//               "WHERE employees.emp_no IN (SELECT emp_no FROM dept_emp WHERE dept_no=".$dept_no.") AND departments.dept_no=".$dept_no." AND titles.emp_no=employees.emp_no ".
-//               "LIMIT ".$limit;
 ?>
 

@@ -11,6 +11,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import orgs.hasan.mysqlJDBC.MysqlJDBC;
 import orgs.hasan.userClasses.Department;
+import orgs.hasan.userClasses.EmpSearchInfo;
 import orgs.hasan.userClasses.Employee;
 import orgs.hasan.userClasses.Title;
 import orgs.hasan.utility.Utility;
@@ -122,7 +123,7 @@ public class DbOperationAccess {
 	}
 	
 	public List<Title> getTitleList() throws SQLException{
-		MysqlJDBC jdbc = new MysqlJDBC();
+		 MysqlJDBC jdbc = new MysqlJDBC();
 		 Connection connection = jdbc.getConnection();
 		 List<Title> titleList = new ArrayList<Title>();
 		 String q1 ="SELECT DISTINCT title FROM titles";
@@ -136,16 +137,235 @@ public class DbOperationAccess {
 		 }
 		 return titleList;
 	}
+	
+	public List<EmpSearchInfo> getEmployeesByFN(String pattern, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 List<EmpSearchInfo> employeeList = new ArrayList<EmpSearchInfo>();
+		 String q1 =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title"+
+	     " FROM employees e,dept_emp de,departments dp,titles t"+
+	     " WHERE e.first_name LIKE '%"+pattern+"%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no"+
+	     " AND t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)"+
+	     " ORDER BY e.emp_no"+
+	     " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String title = rs.getString("title");
+				 int emp_no = rs.getInt("emp_no");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(title);
+				 employeeList.add(employee);
+			 }
+			return employeeList;
+		 }else{
+			 return null;
+		 }
+	}
+	
+	public List<EmpSearchInfo> getEmployeesByLN(String pattern, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 List<EmpSearchInfo> employeeList = new ArrayList<EmpSearchInfo>();
+		 String q1 =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title"+                   
+	     " FROM employees e,dept_emp de,departments dp,titles t"+
+	     " WHERE e.last_name LIKE '%"+pattern+"%' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no"+
+	     " AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)"+
+	     " ORDER BY e.emp_no"+
+	     " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String title = rs.getString("title");
+				 int emp_no = rs.getInt("emp_no");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(title);
+				 employeeList.add(employee);
+			 }
+			return employeeList;
+		 }else{
+			 return null;
+		 }
+	}
+	
+	public EmpSearchInfo getEmpById(int emp_no, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 EmpSearchInfo employee = new EmpSearchInfo();
+		 String q1 ="SELECT employees.emp_no, employees.first_name, employees.last_name,employees.gender,departments.dept_name, titles.title, salaries.salary"+
+         " FROM employees,dept_emp,departments,titles,salaries"+
+         " WHERE employees.emp_no="+emp_no+" AND dept_emp.emp_no="+emp_no+" AND departments.dept_no=dept_emp.dept_no AND titles.emp_no="+emp_no+" AND salaries.emp_no="+emp_no+
+         " ORDER BY employees.emp_no "+ 
+         " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String title = rs.getString("title");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(title);
+			 }
+			return employee;
+		 }else{
+			 return null;
+		 }
+	}
+	
+	public List<EmpSearchInfo> getEmployeesByGender(String gender, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 List<EmpSearchInfo> employees = new ArrayList<EmpSearchInfo>();
+		 String q1 =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title"+
+	     " FROM employees e,dept_emp de,departments dp,titles t"+
+	     " WHERE e.gender='"+gender+"' AND e.emp_no=de.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no"+
+	     " AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)"+
+	     " ORDER BY e.emp_no"+ 
+	     " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String rs_gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String title = rs.getString("title");
+				 int emp_no = rs.getInt("emp_no");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(rs_gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(title);
+				 employees.add(employee);
+			 }
+			return employees;
+		 }else{
+			 return null;
+		 }
+	}
+	
+	public List<EmpSearchInfo> getEmployeesByDept(String dept_no, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 List<EmpSearchInfo> employees = new ArrayList<EmpSearchInfo>();
+		 String q1 =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title"+ 
+	     " FROM employees e,dept_emp de, departments dp,titles t"+
+	     " WHERE de.dept_no='"+dept_no+"' AND e.emp_no=de.emp_no AND dp.dept_no='"+dept_no+"' AND t.emp_no=de.emp_no"+            
+	     " AND  t.from_date IN (SELECT MAX(tt.from_date) FROM titles tt WHERE tt.emp_no=e.emp_no)"+
+		 " ORDER BY e.emp_no"+  
+	     " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String rs_gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String title = rs.getString("title");
+				 int emp_no = rs.getInt("emp_no");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(rs_gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(title);
+				 employees.add(employee);
+			 }
+			return employees;
+		 }else{
+			 return null;
+		 }
+	}
+	
+	public List<EmpSearchInfo> getEmployeesByTitle(String title, int limit) throws SQLException {
+		 MysqlJDBC jdbc = new MysqlJDBC();
+		 Connection connection = jdbc.getConnection();
+		 List<EmpSearchInfo> employees = new ArrayList<EmpSearchInfo>();
+		 String q1 =" SELECT e.emp_no, e.first_name, e.last_name, e.gender, dp.dept_name,t.title"+
+	     " FROM employees e,dept_emp de,departments dp,titles t"+
+	     " WHERE t.title='"+title+"' AND e.emp_no=t.emp_no AND dp.dept_no=de.dept_no AND t.emp_no=de.emp_no"+
+	     " AND  de.from_date IN (SELECT MAX(dd.from_date) FROM dept_emp dd WHERE dd.emp_no=e.emp_no)"+
+	     " ORDER BY e.emp_no"+  
+	     " LIMIT "+limit;
+		 java.sql.PreparedStatement s1 = connection.prepareStatement(q1);
+		 ResultSet rs = s1.executeQuery(q1);
+		 if(rs!=null){
+			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
+				 String first_name = rs.getString("first_name");
+				 String last_name = rs.getString("last_name");
+				 String rs_gender = rs.getString("gender");
+				 String dept_name = rs.getString("dept_name"); 
+				 String res_title = rs.getString("title");
+				 int emp_no = rs.getInt("emp_no");
+				 employee.setEmp_no(emp_no);
+				 employee.setFirst_name(first_name);
+				 employee.setLast_name(last_name);
+				 employee.setGender(rs_gender);
+				 employee.setDept_name(dept_name);
+				 employee.setTitle(res_title);
+				 employees.add(employee);
+			 }
+			return employees;
+		 }else{
+			 return null;
+		 }
+	}
 	 
 	 
 	public static void main(String args[]) throws SQLException{
 		 
 		 DbOperationAccess access = new DbOperationAccess();
-		 List<Department> deptList = new ArrayList<Department>();
-		 deptList = access.getDepartmentList();
-		 for(Department dept : deptList){
-			 System.out.print(dept.getDept_name()+" "+dept.getDept_no());
+		 
+		 
+		 List<EmpSearchInfo> employees = new ArrayList<EmpSearchInfo>();
+		 employees = access.getEmployeesByTitle("Staff", 10);
+		 
+		 for(EmpSearchInfo empSearchInfo : employees){
+			 System.out.println(empSearchInfo.getFirst_name()+" "+empSearchInfo.getEmp_no()+" "+empSearchInfo.getGender());
 		 }
+	     System.out.println("End");
+		 
+//		 EmpSearchInfo empSearchInfo = new EmpSearchInfo();
+//		 empSearchInfo = access.getEmpById(10001, 1);
+//		 System.out.println(empSearchInfo.getFirst_name());
+//		 List<Department> deptList = new ArrayList<Department>();
+//		 deptList = access.getDepartmentList();
+//		 for(Department dept : deptList){
+//			 System.out.print(dept.getDept_name()+" "+dept.getDept_no());
+//		 }
 		 
 //		 if(access.isValidEmployee(1)){
 //			 Employee employee = new Employee();
@@ -171,4 +391,5 @@ public class DbOperationAccess {
 //			 }
 //		 }
 	 }
+
 }

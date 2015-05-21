@@ -24,5 +24,4 @@ public class UtilityService {
 	public List<Title> getTitles() throws SQLException{
 		return serviceImpl.getTitles();
 	}
-
 }

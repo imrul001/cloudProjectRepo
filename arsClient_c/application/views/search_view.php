@@ -93,6 +93,7 @@
             <select id="dept" style="display: none;">
                 <?php
                 if (!empty($dept)) {
+                    $dept=$dept->return;
                     foreach ($dept as $row) {
                         echo '<option value=' . $row->dept_no . '>' . $row->dept_name . '</option>';
                     }
@@ -102,6 +103,7 @@
             <select id="post" style="display: none;">
                 <?php
                 if (!empty($positions)) {
+                    $positions=$positions->return;
                     foreach ($positions as $row) {
                         echo '<option value' . $row->title . '>' . $row->title . '</option>';
                     }
