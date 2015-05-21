@@ -8,26 +8,26 @@
 
 class Model_employees extends CI_Model{
     function addemployee($emp_no,$first_name,$last_name,$gender,$birth_date,$dept_no,$from_date,$to_date,$salary,$title){   
-        $sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
-        if ($q->num_rows() > 0) {return "0";}        
-        else{
-            $str = str_replace("-", " ", $title);
-            $data = array(  'emp_no' => $emp_no ,'first_name' => $first_name ,'last_name' => $last_name,
-                            'gender'=>$gender, 'birth_date'=>date('Y-m-d', strtotime($birth_date)),
-                            'hire_date'=>date('Y-m-d', strtotime($from_date)),
-                    );        
-            $data_dept = array('emp_no' => $emp_no ,'dept_no' => $dept_no ,'from_date'=>date('Y-m-d', strtotime($from_date)),
-                            'to_date'=>date('Y-m-d', strtotime($to_date)),
-                    );     
-            $data_title = array('emp_no' => $emp_no ,'title' => $str ,'from_date'=>date('Y-m-d', strtotime($from_date)),
-                            'to_date'=>date('Y-m-d', strtotime($to_date)),
-                    );
-            $data_salary = array('emp_no' => $emp_no ,'salary' => $salary ,'from_date'=>date('Y-m-d', strtotime($from_date)),
-                            'to_date'=>date('Y-m-d', strtotime($to_date)),
-                    );
-            $this->db->insert('employees', $data); $this->db->insert('dept_emp', $data_dept);
-            $this->db->insert('salaries', $data_salary); $this->db->insert('titles', $data_title);
-            return "1";
+        $str = str_replace("-", " ", $title);
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/HRService?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "emp_no" => $emp_no,
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "birth_date" => date('Y-m-d', strtotime($birth_date)),
+            "gender" => $gender,
+            "from_date" => date('Y-m-d', strtotime($from_date)),
+            "to_date" => date('Y-m-d', strtotime($to_date)),
+            "title" => $str,
+            "dept_no" => $dept_no,
+            "salary" => $salary
+         );
+        $check = $AuthorService->__soapCall('addNewEmployee', $params);
+        if($check){
+          return "1";
+        }else{
+          return "0";
         }
     }
 
