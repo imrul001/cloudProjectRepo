@@ -20,7 +20,7 @@ public class SearchService {
 	
 	@WebMethod(operationName="getEmployeeByID")
 	@WebResult(name="EmployeeSearhInfo")
-	public EmpSearchInfo getEmployeeByID(
+	public List<EmpSearchInfo> getEmployeeByID(
 			@WebParam(partName="emp_no")int emp_no, @WebParam(partName="limit")int limit) throws SQLException{
 		return serviceImpl.getEmployeeById(emp_no, limit);
 	}

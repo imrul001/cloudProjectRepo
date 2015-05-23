@@ -22,7 +22,7 @@ public class HRServiceImpl {
 	public boolean deleteEmployee(int emp_no) throws SQLException{
 		DbOperationAccess access = new DbOperationAccess();
 		boolean checkflag = false;
-		if(access.isValidEmployee(emp_no)){
+		if(!access.isValidEmployee(emp_no)){
 			access.deleteEmployee(emp_no);
 			checkflag = true;
 		}

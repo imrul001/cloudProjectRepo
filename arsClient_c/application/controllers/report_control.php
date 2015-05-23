@@ -56,8 +56,9 @@ class Report_Control extends CI_Controller{
 
    function deleteEmployee(){
         $emp_no = $this->input->post('emp_no');
-        $data['emp_result'] = $this->model_employees->deleteEmployee($emp_no);
-        $this->load->view('deleteEmployee_view', $data);
+        $data = $this->model_employees->deleteEmployee($emp_no);
+        echo $data;
+        // $this->load->view('deleteEmployee_view', $data);
 
    }
 

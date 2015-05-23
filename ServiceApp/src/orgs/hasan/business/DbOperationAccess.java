@@ -208,10 +208,10 @@ public class DbOperationAccess {
 		 }
 	}
 	
-	public EmpSearchInfo getEmpById(int emp_no, int limit) throws SQLException {
+	public List<EmpSearchInfo> getEmpById(int emp_no, int limit) throws SQLException {
 		 MysqlJDBC jdbc = new MysqlJDBC();
 		 Connection connection = jdbc.getConnection();
-		 EmpSearchInfo employee = new EmpSearchInfo();
+		 List<EmpSearchInfo> employees = new ArrayList<EmpSearchInfo>();
 		 String q1 ="SELECT employees.emp_no, employees.first_name, employees.last_name,employees.gender,departments.dept_name, titles.title, salaries.salary"+
          " FROM employees,dept_emp,departments,titles,salaries"+
          " WHERE employees.emp_no="+emp_no+" AND dept_emp.emp_no="+emp_no+" AND departments.dept_no=dept_emp.dept_no AND titles.emp_no="+emp_no+" AND salaries.emp_no="+emp_no+
@@ -221,6 +221,7 @@ public class DbOperationAccess {
 		 ResultSet rs = s1.executeQuery(q1);
 		 if(rs!=null){
 			 while(rs.next()){
+				 EmpSearchInfo employee = new EmpSearchInfo();
 				 String first_name = rs.getString("first_name");
 				 String last_name = rs.getString("last_name");
 				 String gender = rs.getString("gender");
@@ -232,8 +233,9 @@ public class DbOperationAccess {
 				 employee.setGender(gender);
 				 employee.setDept_name(dept_name);
 				 employee.setTitle(title);
+				 employees.add(employee);
 			 }
-			return employee;
+			return employees;
 		 }else{
 			 return null;
 		 }

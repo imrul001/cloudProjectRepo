@@ -8,7 +8,7 @@ import orgs.hasan.userClasses.EmpSearchInfo;
 
 public class SearchServiceImpl {
 	
-	public EmpSearchInfo getEmployeeById(int emp_no, int limit) throws SQLException{
+	public List<EmpSearchInfo> getEmployeeById(int emp_no, int limit) throws SQLException{
 		DbOperationAccess access = new DbOperationAccess();
 		return access.getEmpById(emp_no, limit);
 	}

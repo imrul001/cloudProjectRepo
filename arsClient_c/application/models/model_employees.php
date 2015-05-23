@@ -48,14 +48,13 @@ class Model_employees extends CI_Model{
     }
 
     function deleteEmployee($emp_no){
-    	$sql= "SELECT * FROM employees WHERE emp_no=".$emp_no; $q=$this->db->query($sql);
-        if ($q->num_rows() < 1) {return "1";}        
-        else{
-            $this->db->delete('employees', array('emp_no' => $emp_no)); 
-			      $this->db->delete('dept_emp', array('emp_no' => $emp_no)); 
-			      $this->db->delete('salaries', array('emp_no' => $emp_no)); 
-			      $this->db->delete('titles', array('emp_no' => $emp_no)); 
-        }
+    	  $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/HRService?wsdl";
+        $AuthorService = new SoapClient($wsdl_url);
+        $params = array (
+            "emp_no" => $emp_no
+         );
+        $check = $AuthorService->__soapCall('deleteEmployee', array($params));
+        return $check;
     }
 
 
@@ -157,6 +156,7 @@ class Model_employees extends CI_Model{
 
     function getEmployeeById($id, $limit){
         $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        // $wsdl_url="http://imrul-u30jc:8080/ServiceApp/Search?wsdl";
         $AuthorService = new SoapClient($wsdl_url);
         $params = array (
             "arg0" => $id,
@@ -174,7 +174,7 @@ class Model_employees extends CI_Model{
             "arg1" => $limit
          );
         $employeesList = $AuthorService->__soapCall('getEmployeesByDepartment', array($params));
-        return $employeesList->EmployeeSearhInfo;
+        return $employeesList;
     }
 
     function getEmployeesByGender($gender, $limit){
@@ -185,7 +185,7 @@ class Model_employees extends CI_Model{
             "arg1" => $limit
          );
         $employeesList = $AuthorService->__soapCall('getEmployeesByGender', array($params));
-        return $employeesList->EmployeeSearhInfo;         
+        return $employeesList;         
 
     }
 
@@ -197,7 +197,7 @@ class Model_employees extends CI_Model{
             "arg1" => $limit
          );
         $employeesList = $AuthorService->__soapCall('getEmployeesByTitle', array($params));
-        return $employeesList->EmployeeSearhInfo;        
+        return $employeesList;        
 
     }
     function getEmployeeByFn($pattern, $limit){
@@ -208,18 +208,18 @@ class Model_employees extends CI_Model{
             "arg1" => $limit
          );
         $employeesList = $AuthorService->__soapCall('getEmployeesByFirstName', array($params));
-        return $employeesList->EmployeeSearhInfo;         
+        return $employeesList;         
     }
 
     function getEmployeeByLn($pattern, $limit){
-       $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
+        $wsdl_url = "http://imrul.cloudapp.net:8080/ServiceApp/Search?wsdl";
         $AuthorService = new SoapClient($wsdl_url);
         $params = array (
             "arg0" => $pattern, 
             "arg1" => $limit
          );
         $employeesList = $AuthorService->__soapCall('getEmployeesByLastName', array($params));
-        return $employeesList->EmployeeSearhInfo;
+        return $employeesList;
     }
 
 }
