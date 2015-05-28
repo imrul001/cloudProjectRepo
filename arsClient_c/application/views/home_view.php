@@ -38,6 +38,7 @@
                      <li><a href="#tabs-7">Add Employee</a></li>
                      <li><a href="#tabs-8">Summary</a></li>
                      <li><a href="#tabs-9">Search</a></li>
+                     <li><a href="#tabs-10">Report</a></li>
                   </ul>
                  <!-- <div id="tabs-1">
                      <form id="form_report">
@@ -71,6 +72,11 @@
                  <div id="tabs-9">
                    <?php
                     $this->load->view("search_view");
+                    ?>
+                 </div>
+                 <div id="tabs-10">
+                   <?php
+                    $this->load->view("report_view");
                     ?>
                  </div>
                 </div>
